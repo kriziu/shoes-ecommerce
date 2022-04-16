@@ -13,6 +13,9 @@ import {
 } from '../animations/Home.animations';
 import CollectionList from './CollectionList';
 
+const headerStyle =
+  'text-5xl md:text-6xl xl:text-extra font-extrabold xl:-mt-12 -mt-5 md:-mt-8';
+
 const Home = () => {
   return (
     <>
@@ -27,18 +30,22 @@ const Home = () => {
 
       <div className="flex h-full w-full items-center justify-center">
         <motion.div
-          className="relative h-96 w-96"
+          className="relative h-64 w-64 sm:h-96 sm:w-96"
           variants={imageAnimation}
           animate="to"
         >
           <motion.div
-            className="absolute bottom-full ml-48 mb-10"
+            className="absolute bottom-full ml-5 mb-10 md:ml-10 xl:ml-24 2xl:ml-48"
             variants={textAnimation}
             initial="from"
             animate="to"
           >
-            <h1 className="-mb-12 text-extra font-extrabold">Sport,</h1>
-            <h1 className="text-extra font-extrabold">the smart choice.</h1>
+            <h1 className={headerStyle}>Sport,</h1>
+            <h1 className={`${headerStyle} hidden sm:block`}>
+              the smart choice.
+            </h1>
+            <h1 className={`${headerStyle} block sm:hidden`}>the smart</h1>
+            <h1 className={`${headerStyle} block sm:hidden`}>choice.</h1>
           </motion.div>
           <Image
             layout="raw"

@@ -13,9 +13,9 @@ const Collection = ({ right = false, title, subtitle, image }: Props) => {
     <div
       className={`${
         right && 'flex-row-reverse self-end'
-      } -mb-8 flex h-96 gap-8`}
+      } -mb-8 flex h-96 gap-4 sm:gap-8`}
     >
-      <div className="w-80">
+      <div className="h-80 w-48 sm:w-64 xl:h-auto xl:w-80">
         <Image
           src={image}
           alt={title}
@@ -29,8 +29,8 @@ const Collection = ({ right = false, title, subtitle, image }: Props) => {
           right ? 'items-end text-right' : 'items-start text-left'
         }`}
       >
-        <h2 className="-mb-2 text-5xl font-bold">{title}</h2>
-        <h3 className="w-2/3">{subtitle}</h3>
+        <h2 className="-mb-2 text-3xl font-bold sm:text-5xl">{title}</h2>
+        <h3 className=" w-2/3 text-sm">{subtitle}</h3>
         <Link href="/shoes">
           <a className="btn mt-2 w-max">Checkout</a>
         </Link>

@@ -19,7 +19,7 @@ export const navBarAnimation = {
 export const imageAnimation = {
   to: {
     width: '100%',
-    height: '100%',
+    height: '80%',
     y: '40%',
     padding: '1rem',
     //

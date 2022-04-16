@@ -8,8 +8,8 @@ import Collection from './Collection';
 const CollectionList = () => {
   return (
     <div className="py-28">
-      <div className="flex w-full flex-col items-center">
-        <div className="w-[60rem] translate-x-20">
+      <div className="flex w-full flex-col items-center md:px-16 lg:px-0">
+        <div className="w-full lg:w-[40rem] lg:translate-x-20 xl:w-[60rem]">
           <Collection
             title="Men"
             subtitle="Checkout our men collection for summer"
@@ -23,7 +23,7 @@ const CollectionList = () => {
           />
         </div>
 
-        <div className="w-[60rem] -translate-x-20">
+        <div className="w-full lg:w-[40rem] lg:-translate-x-20 xl:w-[60rem]">
           <Collection
             title="Kid"
             subtitle="See what we offer to kids"

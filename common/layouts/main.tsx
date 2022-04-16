@@ -11,7 +11,7 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
       {router.pathname !== '/' && (
         <>
           <NavBar />
-          <div className="min-h-full px-48">{children}</div>
+          <div className="min-h-full px-10 xl:px-24 2xl:px-48">{children}</div>
           <Footer />
         </>
       )}

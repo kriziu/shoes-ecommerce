@@ -2,7 +2,7 @@ const Divider = () => <div className="my-5 h-px w-full bg-zinc-200"></div>;
 
 const Filter = () => {
   return (
-    <div className="w-48">
+    <div className="hidden w-48 xl:block">
       <h2 className="text-2xl font-semibold">Filter</h2>
       <Divider />
       <h3 className="text-lg font-semibold">Gender</h3>
