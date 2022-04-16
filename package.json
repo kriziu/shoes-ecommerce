@@ -1,20 +1,19 @@
 {
-  "name": "tailwind-template",
+  "name": "shoes-ecommerce",
   "private": true,
   "scripts": {
-    "dev": "nodemon server/index.ts",
-    "dev:client": "ts-node server/index.ts",
-    "build:server": "tsc --project tsconfig.server.json",
-    "build:next": "next build",
-    "build": "npm-run-all build:*",
-    "start": "NODE_ENV=production node build/index.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "express": "^4.17.3",
+    "framer-motion": "^6.3.0",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
     "react-use": "^17.3.2"
   },
   "devDependencies": {

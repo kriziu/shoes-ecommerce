@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  @apply font-montserrat font-medium;
+  @apply font-montserrat font-medium ring-zinc-400 focus:outline-none focus:ring-4;
 }
 
 body {
@@ -12,6 +12,12 @@ body {
 }
 html {
   height: -webkit-fill-available;
+}
+
+@layer components {
+  .btn {
+    @apply bg-black px-5 py-3 text-white transition-all hover:scale-105 active:scale-100;
+  }
 }
 
 #__next {
