@@ -3,15 +3,15 @@ import { defaultEase } from '@/common/animations/easings';
 export const navBarAnimation = {
   from: {
     opacity: 0,
-    y: '-100%',
+    y: -20,
   },
   to: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.2,
+      duration: 0.4,
       ease: defaultEase,
-      delay: 1.9,
+      delay: 1.6,
     },
   },
 };
@@ -37,7 +37,7 @@ export const textAnimation = {
     opacity: 1,
     transition: {
       duration: 0.15,
-      delay: 1.9,
+      delay: 1.5,
     },
   },
 };

@@ -32,14 +32,19 @@ const ProductDetails = () => {
   const image = images[slug as keyof typeof images];
 
   return (
-    <div className="mt-24 flex justify-center gap-24">
-      <motion.div layoutId={slug.toString()}>
+    <div className="mt-24 flex flex-col items-center justify-center px-0 sm:px-5 md:px-10 lg:px-36 xl:flex-row xl:items-start xl:gap-12 xl:px-0 2xl:gap-24">
+      <motion.div
+        layoutId={slug.toString()}
+        className="flex justify-end xl:w-[50%] 2xl:min-w-[50%]"
+      >
         <Image src={image} placeholder="blur" alt="title" />
       </motion.div>
 
-      <div className="mt-5 flex justify-between px-2">
+      <div className="mt-5 flex flex-1 justify-between px-2">
         <div>
-          <h2 className="-mb-1 text-5xl font-semibold">{slug}</h2>
+          <h2 className="mb-2 text-4xl font-semibold leading-none 2xl:text-5xl">
+            {slug}
+          </h2>
 
           <div className="flex items-center gap-1 text-lg">
             <p className="mb-[-2px]">4.7</p>
@@ -49,10 +54,12 @@ const ProductDetails = () => {
             </p>
           </div>
 
-          <h3 className="mt-10 text-4xl">224.99 $</h3>
+          <h3 className="mt-10 text-3xl 2xl:text-4xl">224.99 $</h3>
 
-          <div className="mt-7 flex gap-2">
+          <div className="mt-7 flex flex-wrap gap-2">
             <ProductVariant image={image} selected />
+            <ProductVariant image={image} />
+            <ProductVariant image={image} />
             <ProductVariant image={image} />
             <ProductVariant image={image} />
           </div>
@@ -63,7 +70,7 @@ const ProductDetails = () => {
               (Size guide)
             </h5>
           </div>
-          <div className="mt-2 flex w-4/5 flex-wrap gap-5">
+          <div className="mt-2 flex w-full flex-wrap gap-5">
             {sizes.map((size) => (
               <Size
                 key={size}
@@ -75,7 +82,7 @@ const ProductDetails = () => {
             ))}
           </div>
 
-          <p className="mt-7 w-160">
+          <p className="mt-7 2xl:w-2/3">
             The classic is back. Taking inspiration from the human body and
             &apos;90s track aesthetics, the Nike Air Max 95 mixes unbelievable
             comfort with head turning style. The iconic side panels feature a

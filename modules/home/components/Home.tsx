@@ -35,7 +35,7 @@ const Home = () => {
           animate="to"
         >
           <motion.div
-            className="absolute bottom-full ml-5 mb-10 md:ml-10 xl:ml-24 2xl:ml-48"
+            className="absolute bottom-full ml-5 mb-0 md:ml-10 lg:-mb-5 xl:ml-24 2xl:mb-5 2xl:ml-48"
             variants={textAnimation}
             initial="from"
             animate="to"
