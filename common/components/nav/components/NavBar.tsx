@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AiOutlineMenu, AiOutlineShoppingCart } from 'react-icons/ai';
 
 import { defaultEase } from '@/common/animations/easings';
+import { useToggleCart } from '@/common/recoil/cart';
 import kidImage from '@/public/img/kid.jpg';
 import menImage from '@/public/img/men.jpg';
 import unisexImage from '@/public/img/unisex.jpg';
@@ -17,6 +18,8 @@ import NavMenu from './NavMenu';
 const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
   const [animate, setAnimate] = useState<'from' | 'to'>('from');
   const [opened, setOpened] = useState(false);
+
+  const toggleCartOpened = useToggleCart();
 
   useEffect(() => {
     if (onHomePage) {
@@ -52,7 +55,7 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
             <NavItem title="Unisex" linkTo="/shoes" image={unisexImage} />
           </div>
           <div>
-            <button className="btn-icon">
+            <button className="btn-icon" onClick={toggleCartOpened}>
               <AiOutlineShoppingCart />
             </button>
             <button

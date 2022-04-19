@@ -17,7 +17,7 @@ const MotionImage = ({ title, image, isHover }: Props) => {
 
   return (
     <motion.div
-      className="pointer-events-none absolute left-0 top-0 z-10 w-48 opacity-0"
+      className="pointer-events-none absolute left-0 top-0 z-20 w-48 opacity-0"
       animate={{
         opacity: isHover ? 1 : 0,
         x: docX + 20,

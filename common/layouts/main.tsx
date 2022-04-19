@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
+import { RecoilRoot } from 'recoil';
 
+import Cart from '../components/cart/components/Cart';
 import Footer from '../components/footer/components/Footer';
 import NavBar from '../components/nav/components/NavBar';
 
@@ -28,8 +30,9 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
   }, [router]);
 
   return (
-    <>
+    <RecoilRoot>
       <NavBar onHomePage={router.pathname === '/'} />
+      <Cart />
 
       {router.pathname !== '/' && (
         <>
@@ -41,7 +44,7 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
       )}
 
       {router.pathname === '/' && children}
-    </>
+    </RecoilRoot>
   );
 };
 
