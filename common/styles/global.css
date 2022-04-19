@@ -18,6 +18,10 @@ html {
   .btn {
     @apply bg-black px-5 py-3 text-white transition-all hover:scale-105 active:scale-100;
   }
+
+  .btn-icon {
+    @apply fill-black p-1 text-xl transition-all hover:scale-105 active:scale-100;
+  }
 }
 
 #__next {
@@ -26,4 +30,5 @@ html {
   bottom: 0;
   left: 0;
   right: 0;
+  overflow-x: hidden;
 }

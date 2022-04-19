@@ -21,7 +21,7 @@ const Product = ({ image, title, price, gender }: ProductType) => {
         <a
           className={`block w-72 cursor-pointer ${
             overflow && 'overflow-hidden'
-          }  sm:w-96`}
+          }  md:w-96`}
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}
           onMouseEnter={() => setActive(true)}
