@@ -56,7 +56,7 @@ const Cart = () => {
       </div>
 
       <motion.div
-        className="overflow-overlay flex flex-1 flex-col gap-5 overflow-x-hidden p-1"
+        className="overflow-overlay -mr-1 flex flex-1 flex-col gap-5 overflow-x-hidden p-1"
         transition={{ delayChildren: 0.1, staggerChildren: 0.005 }}
         animate={cart.opened ? 'opened' : 'closed'}
       >
