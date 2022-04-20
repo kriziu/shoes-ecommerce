@@ -10,3 +10,15 @@ export const cartAnimation = {
     transition: { ease: defaultEase },
   },
 };
+
+export const cartItemAnimation = {
+  opened: {
+    x: 0,
+    transition: {
+      ease: defaultEase,
+    },
+  },
+  closed: {
+    x: 50,
+  },
+};

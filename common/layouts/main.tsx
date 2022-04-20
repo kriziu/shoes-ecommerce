@@ -29,6 +29,24 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
     };
   }, [router]);
 
+  useEffect(() => {
+    const handleScroll = (e: any) => {
+      if (!e.target.classList?.contains('on-scrollbar')) {
+        e.target.classList?.add('on-scrollbar');
+
+        setTimeout(() => {
+          e.target.classList?.remove('on-scrollbar');
+        }, 1000);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, true);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, []);
+
   return (
     <RecoilRoot>
       <NavBar onHomePage={router.pathname === '/'} />

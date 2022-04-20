@@ -2,11 +2,15 @@ import { useEffect, useRef } from 'react';
 
 import { motion } from 'framer-motion';
 import { AiOutlineClose } from 'react-icons/ai';
+import { BiPackage } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
 import cartAtom from '@/common/recoil/cart';
 
-import { cartAnimation } from '../animations/Cart.animations';
+import {
+  cartAnimation,
+  cartItemAnimation,
+} from '../animations/Cart.animations';
 import CartItem from './CartItem';
 
 const Cart = () => {
@@ -35,7 +39,7 @@ const Cart = () => {
 
   return (
     <motion.div
-      className="fixed top-0 right-0 z-10 flex h-full w-160 flex-col gap-7 bg-zinc-50 p-10"
+      className="fixed top-0 right-0 z-10 flex h-full w-full flex-col gap-7 bg-zinc-50 p-5 sm:w-[32rem] sm:p-10 lg:w-160"
       variants={cartAnimation}
       initial="closed"
       animate={cart.opened ? 'opened' : 'closed'}
@@ -51,14 +55,46 @@ const Cart = () => {
         </button>
       </div>
 
-      <div className="flex-1">
-        <CartItem />
-      </div>
+      <motion.div
+        className="overflow-overlay flex flex-1 flex-col gap-5 overflow-x-hidden p-1"
+        transition={{ delayChildren: 0.1, staggerChildren: 0.005 }}
+        animate={cart.opened ? 'opened' : 'closed'}
+      >
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+        <motion.div variants={cartItemAnimation}>
+          <CartItem />
+        </motion.div>
+      </motion.div>
 
       <div>
-        <div className="flex w-full items-center justify-between">
+        <div className="mb-2 flex w-full flex-col items-start justify-between sm:mb-0 sm:flex-row sm:items-center">
           <h3 className="text-xl font-semibold">Total: 249.99 $</h3>
-          <h4>Delivery is calculated at checkout</h4>
+          <h4>
+            <BiPackage className="mb-[2px] inline" /> calculated at checkout
+          </h4>
         </div>
 
         <button className="btn w-full">Checkout</button>
