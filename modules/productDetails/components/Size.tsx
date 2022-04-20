@@ -17,7 +17,7 @@ const Size = ({
         if (!disabled && !selected && handleClick) handleClick();
       }}
       className={`
-      w-32 rounded-md border-2 border-zinc-600 py-2 text-lg transition-all
+      w-20 rounded-md border-2 border-zinc-600 p-1 text-lg transition-all 2xl:w-28 2xl:py-2
       ${
         !disabled &&
         !selected &&

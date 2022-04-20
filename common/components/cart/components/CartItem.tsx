@@ -47,7 +47,7 @@ const CartItem = () => {
           <div>
             <Link href="/Air Jordan 1">
               <a
-                className="block w-[28vw] overflow-hidden text-ellipsis whitespace-nowrap font-semibold sm:w-40 lg:w-80"
+                className="block w-[28vw] overflow-hidden text-ellipsis whitespace-nowrap font-semibold sm:w-40 lg:w-56"
                 onClick={toggleCart}
               >
                 Air Jordan 1

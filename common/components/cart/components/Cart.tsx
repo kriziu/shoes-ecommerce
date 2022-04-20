@@ -39,7 +39,7 @@ const Cart = () => {
 
   return (
     <motion.div
-      className="fixed top-0 right-0 z-10 flex h-full w-full flex-col gap-7 bg-zinc-50 p-5 sm:w-[32rem] sm:p-10 lg:w-160"
+      className="fixed top-0 right-0 z-10 flex h-full w-full flex-col gap-7 bg-zinc-50 p-5 sm:w-[32rem] sm:p-10 lg:w-[36rem]"
       variants={cartAnimation}
       initial="closed"
       animate={cart.opened ? 'opened' : 'closed'}

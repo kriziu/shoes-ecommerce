@@ -30,7 +30,7 @@ const ProductList = () => {
   return (
     <div className="mt-36 flex w-full">
       <Filter />
-      <div className="grid flex-1 grid-cols-[repeat(auto-fit,18rem)] justify-center gap-7 md:grid-cols-[repeat(auto-fit,24rem)]">
+      <div className="grid flex-1 grid-cols-[repeat(auto-fit,18rem)] justify-center gap-7 2xl:grid-cols-[repeat(auto-fit,24rem)]">
         {productList.map((product) => (
           <Product {...product} key={product.title} />
         ))}

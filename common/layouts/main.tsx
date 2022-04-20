@@ -16,6 +16,7 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
   useEffect(() => {
     const node = document.getElementById('__next');
     if (node) {
+      node.classList.add('on-scrollbar');
       if (router.pathname === '/shoes' && lastPathName.current === '/[slug]')
         node.scrollTop = lastScrollY.current;
       else node.scrollTop = 0;
@@ -34,9 +35,10 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
       if (!e.target.classList?.contains('on-scrollbar')) {
         e.target.classList?.add('on-scrollbar');
 
-        setTimeout(() => {
-          e.target.classList?.remove('on-scrollbar');
-        }, 1000);
+        if (e.target.id !== '__next')
+          setTimeout(() => {
+            e.target.classList?.remove('on-scrollbar');
+          }, 1000);
       }
     };
 

@@ -27,7 +27,7 @@ const Filter = () => {
   };
 
   return (
-    <div className="mr-24 hidden w-48 xl:block">
+    <div className="hidden w-48 xl:-ml-12 xl:block 2xl:ml-0">
       <h2 className="text-2xl font-semibold">Filter</h2>
       <Divider />
 
