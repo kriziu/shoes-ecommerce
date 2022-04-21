@@ -1,15 +1,17 @@
+import { ChangeEvent } from 'react';
+
 import { AiOutlineCheck } from 'react-icons/ai';
 
 interface Props {
   text: string;
   isChecked?: boolean;
-  onChange?: () => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Checkbox = ({ text, isChecked, onChange }: Props) => {
   return (
     <label className="flex w-max cursor-pointer items-center">
-      <input type="checkbox" onChange={onChange} tabIndex={-1} />
+      <input type="checkbox" onChange={onChange} tabIndex={-1} id={text} />
       <span
         className={`${
           isChecked ? 'border-black bg-black' : 'bg-transparent'

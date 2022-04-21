@@ -5,6 +5,7 @@ import { RecoilRoot } from 'recoil';
 
 import Cart from '../components/cart/components/Cart';
 import Footer from '../components/footer/components/Footer';
+import ModalManager from '../components/modal/components/ModalManager';
 import NavBar from '../components/nav/components/NavBar';
 
 const MainLayout = ({ children }: { children: JSX.Element }) => {
@@ -30,27 +31,9 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
     };
   }, [router]);
 
-  useEffect(() => {
-    const handleScroll = (e: any) => {
-      if (!e.target.classList?.contains('on-scrollbar')) {
-        e.target.classList?.add('on-scrollbar');
-
-        if (e.target.id !== '__next')
-          setTimeout(() => {
-            e.target.classList?.remove('on-scrollbar');
-          }, 1000);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, true);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll, true);
-    };
-  }, []);
-
   return (
     <RecoilRoot>
+      <ModalManager />
       <NavBar onHomePage={router.pathname === '/'} />
       <Cart />
 

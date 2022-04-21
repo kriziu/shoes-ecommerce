@@ -57,27 +57,9 @@ const Cart = () => {
 
       <motion.div
         className="overflow-overlay -mr-1 flex flex-1 flex-col gap-5 overflow-x-hidden p-1"
-        transition={{ delayChildren: 0.1, staggerChildren: 0.005 }}
+        transition={{ delayChildren: 0.05, staggerChildren: 0.01 }}
         animate={cart.opened ? 'opened' : 'closed'}
       >
-        <motion.div variants={cartItemAnimation}>
-          <CartItem />
-        </motion.div>
-        <motion.div variants={cartItemAnimation}>
-          <CartItem />
-        </motion.div>
-        <motion.div variants={cartItemAnimation}>
-          <CartItem />
-        </motion.div>
-        <motion.div variants={cartItemAnimation}>
-          <CartItem />
-        </motion.div>
-        <motion.div variants={cartItemAnimation}>
-          <CartItem />
-        </motion.div>
-        <motion.div variants={cartItemAnimation}>
-          <CartItem />
-        </motion.div>
         <motion.div variants={cartItemAnimation}>
           <CartItem />
         </motion.div>

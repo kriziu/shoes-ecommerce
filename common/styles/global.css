@@ -4,41 +4,22 @@
 
 * {
   @apply font-montserrat font-medium ring-zinc-400 focus:outline-none focus:ring-4;
-}
-
-* {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
-*::-webkit-scrollbar-track {
-  -webkit-box-shadow: none !important;
-  background-color: transparent;
-}
-*::-webkit-scrollbar {
-  width: 3px !important;
-  background-color: transparent;
-}
-*::-webkit-scrollbar-thumb {
-  background-color: transparent;
-}
-
-.on-scrollbar {
   scrollbar-width: thin; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
 }
 
-.on-scrollbar::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   -webkit-box-shadow: none !important;
   background-color: transparent !important;
 }
 
-.on-scrollbar::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 6px !important;
   position: absolute;
   background-color: transparent;
 }
 
-.on-scrollbar::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   @apply bg-black/75;
 }
 
@@ -75,13 +56,18 @@ html {
     @apply fill-black p-1 text-xl transition-all hover:scale-105 active:scale-100;
   }
 
+  .divider {
+    @apply my-5 h-px w-full bg-zinc-200;
+  }
+
   .overflow-overlay {
     overflow-y: scroll;
     overflow-y: overlay;
   }
 }
 
-#__next {
+#__next,
+#portal {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -90,4 +76,8 @@ html {
   overflow-x: hidden;
   overflow-y: scroll;
   overflow-y: overlay;
+}
+
+#portal {
+  z-index: 1;
 }

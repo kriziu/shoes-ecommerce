@@ -28,7 +28,7 @@ const productList: ProductType[] = [
 
 const ProductList = () => {
   return (
-    <div className="mt-36 flex w-full">
+    <div className="relative mt-4 flex w-full pt-32">
       <Filter />
       <div className="grid flex-1 grid-cols-[repeat(auto-fit,18rem)] justify-center gap-7 2xl:grid-cols-[repeat(auto-fit,24rem)]">
         {productList.map((product) => (

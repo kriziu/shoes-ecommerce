@@ -1,9 +1,11 @@
+import { ChangeEvent } from 'react';
+
 import { AiOutlineCheck } from 'react-icons/ai';
 
 interface Props {
   colorName: string;
   isChecked?: boolean;
-  onChange?: () => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const colors = new Map<string, string>([
@@ -30,7 +32,7 @@ const FilterColor = ({ colorName, isChecked, onChange }: Props) => {
 
   return (
     <label className="flex w-max cursor-pointer flex-col items-center justify-self-center">
-      <input type="checkbox" onChange={onChange} tabIndex={-1} />
+      <input type="checkbox" onChange={onChange} tabIndex={-1} id={colorName} />
       <span
         className={`${
           isChecked ? textColor : 'text-transparent'
