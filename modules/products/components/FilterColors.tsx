@@ -19,7 +19,7 @@ const FilterColors = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <h3 className="mb-5 text-lg font-semibold">Colour</h3>
       <div className="mt-2 grid grid-cols-3 gap-2">
         {[

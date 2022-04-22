@@ -9,9 +9,9 @@ const Filter = () => {
 
   const handleOpenModal = () =>
     openModal(
-      <div className="relative flex w-96 flex-col items-start rounded-md bg-white p-10">
+      <div className="relative flex max-w-[40] flex-col items-start rounded-md bg-white p-10">
         <button
-          className="btn-icon absolute top-2 right-2"
+          className="btn-icon absolute top-4 right-4"
           onClick={closeModal}
         >
           <AiOutlineClose />

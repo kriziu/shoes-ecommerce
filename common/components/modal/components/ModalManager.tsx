@@ -33,7 +33,7 @@ const ModalManager = () => {
   return (
     <Portal>
       <motion.div
-        className="z-40 flex h-full w-full items-center justify-center bg-black/80"
+        className="z-40 flex min-h-full w-full items-center justify-center bg-black/80"
         onClick={() => setModal({ modal: <></>, opened: false })}
         variants={bgAnimation}
         initial="closed"
@@ -47,6 +47,7 @@ const ModalManager = () => {
               animate="opened"
               exit="exited"
               onClick={(e) => e.stopPropagation()}
+              className="p-6"
             >
               {modal}
             </motion.div>

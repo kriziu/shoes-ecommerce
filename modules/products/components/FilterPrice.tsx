@@ -73,7 +73,8 @@ const FilterPrice = () => {
           })
         }
       />
-      <div className="mt-3 flex flex-1">
+      <span className="mt-2 block">Range</span>
+      <div className="mt-1 flex flex-1">
         <input
           type="number"
           className="w-1/2 rounded-md border px-1"
