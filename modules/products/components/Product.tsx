@@ -8,13 +8,21 @@ import { useTimeoutFn } from 'react-use';
 
 import { defaultEase } from '@/common/animations/easings';
 
-const ProductComponent = ({ image, name, price, permalink }: Product) => {
+const ProductComponent = ({
+  image,
+  name,
+  price,
+  permalink,
+  categories,
+}: Product) => {
   const [active, setActive] = useState(false);
   const [overflow, setOverflow] = useState(false);
 
   useTimeoutFn(() => {
     setOverflow(true);
   }, 200);
+
+  const category = categories[0]?.name || 'N/A';
 
   return (
     <div className="w-max">
@@ -38,8 +46,8 @@ const ProductComponent = ({ image, name, price, permalink }: Product) => {
           >
             <Image
               layout="raw"
-              width={400}
-              height={500}
+              width={image?.image_dimensions.width || 864 / 2}
+              height={image?.image_dimensions.height || 1080 / 2}
               src={image?.url || ''}
               alt={name}
             />
@@ -50,7 +58,7 @@ const ProductComponent = ({ image, name, price, permalink }: Product) => {
       <div className="mt-2 flex justify-between px-2">
         <div>
           <h4 className="-mb-1 text-lg">{name}</h4>
-          <h5 className="text-zinc-500">Men</h5>
+          <h5 className="text-zinc-500">{category}</h5>
         </div>
         <h4 className="text-lg">{price.formatted_with_symbol}</h4>
       </div>

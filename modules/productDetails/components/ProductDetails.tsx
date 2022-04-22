@@ -12,7 +12,12 @@ import Size from './Size';
 
 const sizes = [42, 42.5, 43, 43.5, 44];
 
-const ProductDetails = ({ image, name, description }: Product) => {
+const ProductDetails = ({
+  image,
+  name,
+  description,
+  related_products,
+}: Product) => {
   const { slug } = useRouter().query;
 
   const [selectedSize, setSelectedSize] = useState(42);
@@ -28,8 +33,8 @@ const ProductDetails = ({ image, name, description }: Product) => {
         <Image
           src={image?.url || ''}
           layout="raw"
-          width={864}
-          height={1080}
+          width={image?.image_dimensions.width || 864}
+          height={image?.image_dimensions.height || 1080}
           alt={name}
         />
       </motion.div>
@@ -51,11 +56,15 @@ const ProductDetails = ({ image, name, description }: Product) => {
           <h3 className="mt-10 text-3xl 2xl:text-4xl">224.99 $</h3>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            <ProductVariant selected />
-            <ProductVariant />
-            <ProductVariant />
-            <ProductVariant />
-            <ProductVariant />
+            <ProductVariant selected imageURL={image?.url || ''} />
+            {related_products.map((relatedProduct) => {
+              return (
+                <ProductVariant
+                  key={relatedProduct.id}
+                  imageURL={relatedProduct.image?.url || ''}
+                />
+              );
+            })}
           </div>
 
           <div className="mt-7 flex items-center gap-2">

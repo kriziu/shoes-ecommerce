@@ -4,9 +4,14 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import { defaultEase } from '@/common/animations/easings';
-import variant from '@/public/img/shoe1.webp';
 
-const ProductVariant = ({ selected = false }: { selected?: boolean }) => {
+const ProductVariant = ({
+  selected = false,
+  imageURL,
+}: {
+  selected?: boolean;
+  imageURL: string;
+}) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -29,10 +34,11 @@ const ProductVariant = ({ selected = false }: { selected?: boolean }) => {
         className="h-full w-full"
       >
         <Image
-          src={variant}
-          placeholder="blur"
+          src={imageURL}
           alt="title"
           layout="raw"
+          width={400}
+          height={500}
           className="h-full w-full object-cover"
         />
       </motion.div>
