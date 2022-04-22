@@ -1,17 +1,12 @@
 import { useState } from 'react';
 
 import { motion } from 'framer-motion';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { defaultEase } from '@/common/animations/easings';
+import variant from '@/public/img/shoe1.webp';
 
-const ProductVariant = ({
-  image,
-  selected = false,
-}: {
-  image: StaticImageData;
-  selected?: boolean;
-}) => {
+const ProductVariant = ({ selected = false }: { selected?: boolean }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -34,7 +29,7 @@ const ProductVariant = ({
         className="h-full w-full"
       >
         <Image
-          src={image}
+          src={variant}
           placeholder="blur"
           alt="title"
           layout="raw"

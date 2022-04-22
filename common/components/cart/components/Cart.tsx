@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import { motion } from 'framer-motion';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BiPackage } from 'react-icons/bi';
+import { useClickAway } from 'react-use';
 import { useRecoilState } from 'recoil';
 
 import cartAtom from '@/common/recoil/cart';
@@ -18,24 +19,7 @@ const Cart = () => {
 
   const cartRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        !e.composedPath().includes(cartRef.current as EventTarget) &&
-        cart.opened
-      ) {
-        setCart({ ...cart, opened: false });
-      }
-    };
-
-    if (cartRef.current) {
-      window.addEventListener('click', handleClickOutside);
-    }
-
-    return () => {
-      window.removeEventListener('click', handleClickOutside);
-    };
-  }, [cartRef, setCart, cart]);
+  useClickAway(cartRef, () => setCart({ ...cart, opened: false }));
 
   return (
     <motion.div

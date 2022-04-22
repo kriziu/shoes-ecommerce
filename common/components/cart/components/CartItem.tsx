@@ -17,7 +17,7 @@ const CartItem = () => {
   return (
     <div className="flex h-28 items-start justify-between sm:h-32">
       <div className="flex flex-1">
-        <Link href="/Air Jordan 1" passHref>
+        <Link href="/air-jordan-1" passHref>
           <a
             className="h-28 w-28 overflow-hidden sm:h-32 sm:w-32"
             onClick={toggleCart}
@@ -45,7 +45,7 @@ const CartItem = () => {
         </Link>
         <div className="my-3 ml-2 flex flex-1 flex-col justify-between sm:ml-5">
           <div>
-            <Link href="/Air Jordan 1">
+            <Link href="/air-jordan-1">
               <a
                 className="block w-[28vw] overflow-hidden text-ellipsis whitespace-nowrap font-semibold sm:w-40 lg:w-56"
                 onClick={toggleCart}
