@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { Asset } from '@chec/commerce.js/types/asset';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { wrap } from 'popmotion';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 import { galleryVariants } from '../animations/ProductGallery.animations';
-import Image from 'next/image';
-
-const MotionImage = motion(Image);
 
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) => {
@@ -16,7 +14,13 @@ const swipePower = (offset: number, velocity: number) => {
 };
 
 const ProductGallery = ({ images }: { images: Asset[] }) => {
+  const [initial, setInitial] = useState(true);
+
   const [[page, direction], setPage] = useState([0, 0]);
+
+  useEffect(() => {
+    setInitial(false);
+  }, []);
 
   const imageIndex = wrap(0, images.length, page);
 
@@ -30,7 +34,7 @@ const ProductGallery = ({ images }: { images: Asset[] }) => {
         key={page}
         custom={direction}
         variants={galleryVariants}
-        initial="enter"
+        initial={!initial && 'enter'}
         animate="center"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
@@ -44,7 +48,7 @@ const ProductGallery = ({ images }: { images: Asset[] }) => {
             paginate(-1);
           }
         }}
-        className=" h-full w-full"
+        className="h-full w-full"
       >
         <Image
           src={images[imageIndex].url}
@@ -53,6 +57,7 @@ const ProductGallery = ({ images }: { images: Asset[] }) => {
           height={images[imageIndex].image_dimensions.height || 1080}
           className="pointer-events-none object-cover"
           layout="raw"
+          priority
         />
       </motion.div>
       <button
