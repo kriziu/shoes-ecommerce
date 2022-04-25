@@ -26,7 +26,15 @@ const MotionImage = ({ title, image, isHover }: Props) => {
       transition={{ ease: 'easeOut', duration: 0.2 }}
       ref={ref}
     >
-      <Image src={image} alt={title} layout="raw" placeholder="blur" />
+      <Image
+        src={image}
+        alt={title}
+        layout="raw"
+        placeholder="blur"
+        className="h-full w-full object-cover"
+        width={400}
+        height={500}
+      />
     </motion.div>
   );
 };

@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import { useRecoilState } from 'recoil';
 
 import Checkbox from '@/common/components/checkbox/components/Checkbox';
-import { filterAtom } from '@/common/recoil/filter/filter.atom';
+import filterAtom from '@/common/recoil/filter';
 
 const FilterKids = () => {
   const [filter, setFilter] = useRecoilState(filterAtom);

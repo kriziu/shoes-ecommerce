@@ -25,7 +25,7 @@ const ProductComponent = ({
   const category = categories[0]?.name || 'N/A';
 
   return (
-    <div className="w-max">
+    <motion.div className="h-max w-max" layoutId={image?.id}>
       <Link href={permalink} passHref>
         <a
           className={`block w-72 cursor-pointer ${
@@ -42,14 +42,14 @@ const ProductComponent = ({
               ease: defaultEase,
             }}
             animate={{ scale: active ? 1.07 : 1 }}
-            layoutId={image?.id}
           >
             <Image
               layout="raw"
-              width={image?.image_dimensions.width || 864 / 2}
-              height={image?.image_dimensions.height || 1080 / 2}
+              width={(image?.image_dimensions.width || 864) / 3}
+              height={(image?.image_dimensions.height || 1080) / 3}
               src={image?.url || ''}
               alt={name}
+              className="h-full w-full object-cover"
             />
           </motion.div>
         </a>
@@ -62,7 +62,7 @@ const ProductComponent = ({
         </div>
         <h4 className="text-lg">{price.formatted_with_symbol}</h4>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

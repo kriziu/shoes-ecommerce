@@ -17,6 +17,7 @@ const ProductDetails = ({
   name,
   description,
   related_products,
+  permalink,
 }: Product) => {
   const { slug } = useRouter().query;
 
@@ -56,12 +57,13 @@ const ProductDetails = ({
           <h3 className="mt-10 text-3xl 2xl:text-4xl">224.99 $</h3>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            <ProductVariant selected imageURL={image?.url || ''} />
+            <ProductVariant selected image={image} permalink={permalink} />
             {related_products.map((relatedProduct) => {
               return (
                 <ProductVariant
                   key={relatedProduct.id}
-                  imageURL={relatedProduct.image?.url || ''}
+                  image={relatedProduct.image}
+                  permalink={relatedProduct.permalink}
                 />
               );
             })}

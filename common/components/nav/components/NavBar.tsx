@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { AiOutlineMenu, AiOutlineShoppingCart } from 'react-icons/ai';
+import { useSetRecoilState } from 'recoil';
 
 import { defaultEase } from '@/common/animations/easings';
 import { useToggleCart } from '@/common/recoil/cart';
+import filterAtom, { defaultFilter } from '@/common/recoil/filter';
 import kidImage from '@/public/img/kid.jpg';
 import menImage from '@/public/img/men.jpg';
 import unisexImage from '@/public/img/unisex.jpg';
@@ -20,6 +22,8 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
   const [opened, setOpened] = useState(false);
 
   const toggleCartOpened = useToggleCart();
+
+  const setFilter = useSetRecoilState(filterAtom);
 
   useEffect(() => {
     if (onHomePage) {
@@ -49,10 +53,50 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
             </Link>
           </h2>
           <div className="hidden gap-6 px-24 md:flex">
-            <NavItem title="Men" linkTo="/shoes" image={menImage} />
-            <NavItem title="Women" linkTo="/shoes" image={womenImage} />
-            <NavItem title="Kids" linkTo="/shoes" image={kidImage} />
-            <NavItem title="Unisex" linkTo="/shoes" image={unisexImage} />
+            <NavItem
+              title="Men"
+              linkTo="/shoes"
+              image={menImage}
+              handleClick={() =>
+                setFilter({
+                  ...defaultFilter,
+                  gender: { ...defaultFilter.gender, men: true },
+                })
+              }
+            />
+            <NavItem
+              title="Women"
+              linkTo="/shoes"
+              image={womenImage}
+              handleClick={() =>
+                setFilter({
+                  ...defaultFilter,
+                  gender: { ...defaultFilter.gender, women: true },
+                })
+              }
+            />
+            <NavItem
+              title="Kids"
+              linkTo="/shoes"
+              image={kidImage}
+              handleClick={() =>
+                setFilter({
+                  ...defaultFilter,
+                  kids: { boys: true, girls: true },
+                })
+              }
+            />
+            <NavItem
+              title="Unisex"
+              linkTo="/shoes"
+              image={unisexImage}
+              handleClick={() =>
+                setFilter({
+                  ...defaultFilter,
+                  gender: { ...defaultFilter.gender, unisex: true },
+                })
+              }
+            />
           </div>
           <div>
             <button className="btn-icon" onClick={toggleCartOpened}>

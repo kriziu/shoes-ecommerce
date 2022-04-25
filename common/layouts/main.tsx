@@ -7,7 +7,6 @@ import Cart from '../components/cart/components/Cart';
 import Footer from '../components/footer/components/Footer';
 import ModalManager from '../components/modal/components/ModalManager';
 import NavBar from '../components/nav/components/NavBar';
-import FilterSynchronizer from '../lib/filterSynchronizer';
 
 const MainLayout = ({ children }: { children: JSX.Element }) => {
   const router = useRouter();
@@ -34,7 +33,6 @@ const MainLayout = ({ children }: { children: JSX.Element }) => {
 
   return (
     <RecoilRoot>
-      <FilterSynchronizer />
       <ModalManager />
       <NavBar onHomePage={router.pathname === '/'} />
       <Cart />

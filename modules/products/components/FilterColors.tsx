@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 
 import { useRecoilState } from 'recoil';
 
-import { filterAtom } from '@/common/recoil/filter/filter.atom';
+import filterAtom from '@/common/recoil/filter';
 
 import FilterColor from './FilterColor';
 

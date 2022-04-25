@@ -1,47 +1,59 @@
-// import shoe1 from '@/public/img/shoe1.webp';
-// import shoe2 from '@/public/img/shoe2.webp';
-// import shoe3 from '@/public/img/shoe3.webp';
-
+import { Product } from '@chec/commerce.js/types/product';
 import { useRecoilValue } from 'recoil';
 
-import productListAtom from '@/common/recoil/productList';
+import filterAtom from '@/common/recoil/filter';
 
 import Filter from './Filter';
 import ProductComponent from './Product';
 
-// const productList: ProductType[] = [
-//   {
-//     title: 'Air Jordan 7 Retro SE',
-//     image: shoe1,
-//     gender: 'Men',
-//     price: 224.99,
-//   },
-//   {
-//     title: 'Air Jordan 1',
-//     image: shoe3,
-//     gender: 'Men',
-//     price: 159.99,
-//   },
-//   {
-//     title: "Nike Air Force 1 '07",
-//     image: shoe2,
-//     gender: 'Unisex',
-//     price: 120,
-//   },
-// ];
+const ProductList = ({ products }: { products: Product[] }) => {
+  const filter = useRecoilValue(filterAtom);
 
-const ProductList = () => {
-  const productList = useRecoilValue(productListAtom);
+  const categories: string[] = [];
+  const colors: string[] = [];
+
+  Object.keys(filter.gender).forEach((gender) => {
+    if (filter.gender[gender as keyof typeof filter.gender])
+      categories.push(gender);
+  });
+
+  Object.keys(filter.kids).forEach((kid) => {
+    if (filter.kids[kid as keyof typeof filter.kids]) categories.push(kid);
+  });
+
+  Object.keys(filter.colors).forEach((color) => {
+    if (filter.colors[color as keyof typeof filter.colors]) colors.push(color);
+  });
+
+  let filteredProducts = products.filter((product) => {
+    if (categories.length > 0) {
+      if (
+        product.categories.some((category) =>
+          categories.includes(category.slug)
+        )
+      )
+        return true;
+      return false;
+    }
+    return true;
+  });
+
+  if (colors.length > 0)
+    filteredProducts = filteredProducts.filter((product) => {
+      if (
+        colors.includes(
+          (product.attributes[0].value as { value: string }[])[0].value
+        )
+      )
+        return true;
+      return false;
+    });
 
   return (
     <div className="relative mt-4 flex w-full pt-32">
       <Filter />
-      <div
-        className={`grid flex-1 grid-cols-[repeat(auto-fit,18rem)] justify-center gap-7 2xl:grid-cols-[repeat(auto-fit,24rem)] ${
-          productList.loading && 'animate-pulse'
-        }`}
-      >
-        {productList.products.map((product) => (
+      <div className="relative grid flex-1 grid-cols-[repeat(auto-fit,18rem)] justify-center gap-7 2xl:grid-cols-[repeat(auto-fit,24rem)]">
+        {filteredProducts.map((product) => (
           <ProductComponent {...product} key={product.id} />
         ))}
       </div>
