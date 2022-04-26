@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BiPackage } from 'react-icons/bi';
 import { useClickAway } from 'react-use';
@@ -23,7 +24,10 @@ const Cart = () => {
 
   const cartRef = useRef<HTMLDivElement>(null);
 
-  useClickAway(cartRef, () => setCart({ ...cart, opened: false }));
+  useClickAway(
+    cartRef,
+    () => cart.opened && setCart({ ...cart, opened: false })
+  );
 
   useEffect(() => {
     commerceJS.cart
@@ -38,7 +42,7 @@ const Cart = () => {
   return (
     <>
       <motion.div
-        className="pointer-events-none absolute top-0 z-10 h-full w-full bg-black/50"
+        className="pointer-events-none fixed top-0 z-10 h-full w-full bg-black/50"
         variants={bgAnimation}
         initial="closed"
         animate={cart.opened ? 'opened' : 'closed'}
@@ -99,12 +103,18 @@ const Cart = () => {
             </h4>
           </div>
 
-          <button
-            className="btn w-full disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:scale-100"
-            disabled={cart.updating || cart.total_unique_items === 0}
-          >
-            Checkout
-          </button>
+          <Link href="/checkout">
+            <a
+              className="btn block w-full text-center disabled:cursor-not-allowed"
+              onClick={(e) => {
+                if (cart.updating || cart.total_unique_items === 0)
+                  e.preventDefault();
+                else setCart({ ...cart, opened: false });
+              }}
+            >
+              Checkout
+            </a>
+          </Link>
         </div>
       </motion.div>
     </>

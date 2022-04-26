@@ -26,7 +26,7 @@ const CartItem = ({
   const [hover, setHover] = useState(false);
   const [quantityState, setQuantityState] = useState(quantity);
 
-  const toggleCart = useToggleCart();
+  const toggleCart = useToggleCart(true);
   const removeItem = useRemoveFromCart();
   const updateQuantity = useUpdateItemQuantity();
 

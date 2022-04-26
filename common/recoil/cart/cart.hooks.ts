@@ -4,13 +4,13 @@ import { commerceJS } from '@/common/lib/commerce';
 
 import { cartAtom } from './cart.atom';
 
-export const useToggleCart = () => {
+export const useToggleCart = (alwaysFalse = false) => {
   const setCart = useSetRecoilState(cartAtom);
 
   return () => {
     setCart((prevState) => ({
       ...prevState,
-      opened: !prevState.opened,
+      opened: alwaysFalse ? false : !prevState.opened,
     }));
   };
 };
