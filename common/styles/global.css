@@ -64,6 +64,10 @@ html {
     overflow-y: scroll;
     overflow-y: overlay;
   }
+
+  .input {
+    @apply rounded-md border px-2 py-1;
+  }
 }
 
 #__next,

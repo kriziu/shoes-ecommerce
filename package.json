@@ -10,6 +10,7 @@
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
     "express": "^4.17.3",
+    "formik": "^2.2.9",
     "framer-motion": "^6.3.0",
     "next": "latest",
     "popmotion": "^11.0.3",
@@ -18,7 +19,8 @@
     "react-icons": "^4.3.1",
     "react-use": "^17.3.2",
     "recoil": "^0.7.2",
-    "sharp": "^0.30.4"
+    "sharp": "^0.30.4",
+    "stripe": "^8.219.0"
   },
   "devDependencies": {
     "@types/chec__commerce.js": "^2.8.5",

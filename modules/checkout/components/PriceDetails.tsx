@@ -77,7 +77,7 @@ const PriceDetails = ({ checkout, resetCheckout, generating }: Props) => {
             <label className="font-semibold">Enter discount code</label>
             <div className="flex gap-3">
               <input
-                className="w-36 rounded-md border px-2 py-1"
+                className="input w-36"
                 placeholder="Code..."
                 value={code}
                 onChange={(e) => setCode(e.target.value)}

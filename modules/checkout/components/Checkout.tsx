@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
 import { useRecoilValue } from 'recoil';
+import { Stripe } from 'stripe';
 
 import Spinner from '@/common/components/Loader/components/Spinner';
 import { commerceJS } from '@/common/lib/commerce';
@@ -9,6 +10,10 @@ import cartAtom from '@/common/recoil/cart';
 
 import CheckoutForm from './CheckoutForm';
 import PriceDetails from './PriceDetails';
+
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY || '', {
+  apiVersion: '2020-08-27',
+});
 
 const Checkout = () => {
   const cart = useRecoilValue(cartAtom);
@@ -36,7 +41,7 @@ const Checkout = () => {
     );
 
   return (
-    <div className="mt-10 flex flex-col justify-between lg:h-screen lg:flex-row 2xl:mt-20 2xl:justify-around">
+    <div className="mt-10 flex flex-col justify-between lg:h-screen lg:flex-row 2xl:mt-20 2xl:justify-center 2xl:gap-96">
       <CheckoutForm />
       <PriceDetails
         checkout={checkout}
