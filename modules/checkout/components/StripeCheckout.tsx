@@ -22,20 +22,18 @@ const StripeCheckout = () => {
 
     setIsLoading(true);
 
-    console.log(elements);
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: 'http://localhost:3000',
+      },
+    });
 
-    // const { error } = await stripe.confirmPayment({
-    //   elements,
-    //   confirmParams: {
-    //     return_url: 'http://localhost:3000',
-    //   },
-    // });
-
-    // if (error.type === 'card_error' || error.type === 'validation_error') {
-    //   setMessage(error.message || '');
-    // } else {
-    //   setMessage('An unexpected error occured.');
-    // }
+    if (error.type === 'card_error' || error.type === 'validation_error') {
+      setMessage(error.message || '');
+    } else {
+      setMessage('An unexpected error occured.');
+    }
 
     setIsLoading(false);
   };
