@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
+    "@stripe/react-stripe-js": "^1.7.2",
+    "@stripe/stripe-js": "^1.29.0",
+    "axios": "^0.27.1",
     "express": "^4.17.3",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.0",
