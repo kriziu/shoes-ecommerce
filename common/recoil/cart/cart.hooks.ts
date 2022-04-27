@@ -16,15 +16,21 @@ export const useToggleCart = (alwaysFalse = false) => {
 export const useAddToCart = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  return (product: SimpleProduct) => {
+  return (product: SimpleProduct, size: number) => {
     setCart((prev) => {
-      if (prev.attributes.products.some((p) => p.id === product.id)) {
+      if (
+        prev.attributes.products.some(
+          (p) => p.id === product.id && p.size === size
+        )
+      ) {
         return {
           ...prev,
           opened: true,
           attributes: {
             products: prev.attributes.products.map((p) =>
-              product.id === p.id ? { ...p, quantity: p.quantity + 1 } : p
+              product.id === p.id && p.size === size
+                ? { ...p, quantity: p.quantity + 1 }
+                : p
             ),
           },
         };
@@ -34,7 +40,10 @@ export const useAddToCart = () => {
         ...prev,
         opened: true,
         attributes: {
-          products: [...prev.attributes.products, { ...product, quantity: 1 }],
+          products: [
+            ...prev.attributes.products,
+            { ...product, quantity: 1, size },
+          ],
         },
       };
     });
@@ -44,13 +53,15 @@ export const useAddToCart = () => {
 export const useRemoveFromCart = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  return (id: string) => {
+  return (id: string, size: number) => {
     setCart((prev) => ({
       ...prev,
       attributes: {
-        products: prev.attributes.products.filter(
-          (product) => product.id !== id
-        ),
+        products: prev.attributes.products.filter((product) => {
+          if (product.id === id && product.size === size) return false;
+
+          return true;
+        }),
       },
     }));
   };
@@ -59,12 +70,14 @@ export const useRemoveFromCart = () => {
 export const useUpdateItemQuantity = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  return (id: string, quantity: number) => {
+  return (id: string, size: number, quantity: number) => {
     setCart((prev) => ({
       ...prev,
       attributes: {
         products: prev.attributes.products.map((product) =>
-          product.id === id ? { ...product, quantity } : product
+          product.id === id && product.size === size
+            ? { ...product, quantity }
+            : product
         ),
       },
     }));

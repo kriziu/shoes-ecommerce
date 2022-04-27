@@ -68,7 +68,7 @@ const Cart = () => {
           animate={cart.opened ? 'opened' : 'closed'}
         >
           {cart.attributes.products.map((item) => (
-            <CartItem {...item} key={item.id} />
+            <CartItem {...item} key={item.id + item.size} />
           ))}
         </motion.div>
 

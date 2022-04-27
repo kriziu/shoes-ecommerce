@@ -11,12 +11,12 @@ import ProductGallery from './ProductGallery';
 import ProductVariant from './ProductVariant';
 import Size from './Size';
 
-const sizes = [42, 42.5, 43, 43.5, 44];
+const defaultSizes = [42, 42.5, 43, 43.5, 44];
 
 const ProductDetails = ({ product }: { product: Product }) => {
   const { slug } = useRouter().query;
 
-  const [selectedSize, setSelectedSize] = useState(42);
+  const [selectedSize, setSelectedSize] = useState(product.attributes.sizes[0]);
 
   const addToCart = useAddToCart();
 
@@ -24,7 +24,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
 
   const {
     id,
-    attributes: { name, description, images, price, productVariants },
+    attributes: { name, description, images, price, productVariants, sizes },
   } = product;
 
   return (
@@ -53,22 +53,18 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <h3 className="mt-10 text-3xl 2xl:text-4xl">€{price}</h3>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            <ProductVariant
-              selected
-              image={images.data[0]}
-              slug={slug.toString()}
-            />
-            {productVariants.data.attributes.products.data
-              .filter((p) => p.id !== id)
-              .map((relatedProduct) => {
+            {productVariants.data.attributes.products.data.map(
+              (relatedProduct) => {
                 return (
                   <ProductVariant
+                    selected={relatedProduct.id === id}
                     key={relatedProduct.id}
                     image={relatedProduct.attributes.images.data[0]}
                     slug={relatedProduct.attributes.slug}
                   />
                 );
-              })}
+              }
+            )}
           </div>
 
           <div className="mt-7 flex items-center gap-2">
@@ -78,12 +74,11 @@ const ProductDetails = ({ product }: { product: Product }) => {
             </h5>
           </div>
           <div className="mt-2 flex w-full flex-wrap gap-5">
-            {sizes.map((size) => (
+            {(sizes || defaultSizes).map((size) => (
               <Size
                 key={size}
                 size={size}
                 selected={size === selectedSize}
-                disabled={size === 43}
                 handleClick={() => setSelectedSize(size)}
               />
             ))}
@@ -98,7 +93,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
 
           <button
             className="btn mt-7 text-xl"
-            onClick={() => addToCart(product)}
+            onClick={() => addToCart(product, selectedSize)}
           >
             Add to cart
           </button>

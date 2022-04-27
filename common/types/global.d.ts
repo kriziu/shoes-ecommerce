@@ -29,6 +29,7 @@ export declare global {
       description: string;
       promotionPrice: number | null;
       color: string;
+      sizes: number[];
       productVariants: {
         data: {
           attributes: {
@@ -72,6 +73,7 @@ export declare global {
 
   interface CartProduct extends SimpleProduct {
     quantity: number;
+    size: number;
   }
 
   interface Cart {

@@ -13,6 +13,7 @@ export const GET_SINGLE_PRODUCT = gql`
           description
           promotionPrice
           color
+          sizes
           productVariants {
             data {
               attributes {

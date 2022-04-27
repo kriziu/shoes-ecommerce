@@ -22,6 +22,7 @@ const CartItem = ({
       data: [image],
     },
   },
+  size,
   quantity,
 }: CartProduct) => {
   const [hover, setHover] = useState(false);
@@ -31,13 +32,13 @@ const CartItem = ({
   const updateQuantity = useUpdateItemQuantity();
 
   const handleUpdateQuantity = (newQuantity: number) => {
-    updateQuantity(id, newQuantity);
+    updateQuantity(id, size, newQuantity);
   };
 
   return (
     <motion.div
       className="flex h-28 items-start justify-between sm:h-32"
-      layoutId={`${id}-cart-item`}
+      layoutId={`${id + size}-cart-item`}
     >
       <div className="flex flex-1">
         <Link href={slug} passHref>
@@ -77,7 +78,7 @@ const CartItem = ({
                 {name}
               </a>
             </Link>
-            <h5 className="mt-1 text-sm">Size: 42</h5>
+            <h5 className="mt-1 text-sm">Size: {size}</h5>
           </div>
           <div className="flex items-center">
             <button
@@ -103,7 +104,10 @@ const CartItem = ({
           <h4 className="font-semibold">€{price * quantity}</h4>
           <h5 className="mt-1 text-sm">€{price}</h5>
         </div>
-        <button className="btn mb-6 py-1 px-2" onClick={() => removeItem(id)}>
+        <button
+          className="btn mb-6 py-1 px-2"
+          onClick={() => removeItem(id, size)}
+        >
           Remove
         </button>
       </div>
