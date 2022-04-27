@@ -24,13 +24,15 @@
     "react-use": "^17.3.2",
     "recoil": "^0.7.2",
     "sharp": "^0.30.4",
-    "stripe": "^8.219.0"
+    "stripe": "^8.219.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "17.0.4",
     "@types/react": "17.0.38",
     "@types/react-dom": "^18.0.1",
+    "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.0",
     "eslint": "8.2.0",
     "eslint-config-airbnb": "^19.0.4",

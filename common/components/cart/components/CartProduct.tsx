@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { v4 as uuidv4 } from 'uuid';
 
 import { defaultEase } from '@/common/animations/easings';
 import { useToggleCart } from '@/common/recoil/cart';
 import {
   useRemoveFromCart,
-  useUpdateItemQuantity,
+  useUpdateQuantity,
 } from '@/common/recoil/cart/cart.hooks';
 
-const CartItem = ({
+const CartProduct = ({
   id,
   attributes: {
     name,
@@ -29,16 +30,18 @@ const CartItem = ({
 
   const toggleCart = useToggleCart(true);
   const removeItem = useRemoveFromCart();
-  const updateQuantity = useUpdateItemQuantity();
+  const updateQuantity = useUpdateQuantity();
 
   const handleUpdateQuantity = (newQuantity: number) => {
     updateQuantity(id, size, newQuantity);
   };
 
+  const uuid = useMemo(() => uuidv4(), []);
+
   return (
     <motion.div
       className="flex h-28 items-start justify-between sm:h-32"
-      layoutId={`${id + size}-cart-item`}
+      layoutId={uuid}
     >
       <div className="flex flex-1">
         <Link href={slug} passHref>
@@ -115,4 +118,4 @@ const CartItem = ({
   );
 };
 
-export default CartItem;
+export default CartProduct;

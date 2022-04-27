@@ -67,7 +67,7 @@ export const useRemoveFromCart = () => {
   };
 };
 
-export const useUpdateItemQuantity = () => {
+export const useUpdateQuantity = () => {
   const setCart = useSetRecoilState(cartAtom);
 
   return (id: string, size: number, quantity: number) => {

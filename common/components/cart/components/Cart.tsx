@@ -11,7 +11,7 @@ import cartAtom from '@/common/recoil/cart';
 import { useClearCart } from '@/common/recoil/cart/cart.hooks';
 
 import { bgAnimation, cartAnimation } from '../animations/Cart.animations';
-import CartItem from './CartItem';
+import CartProduct from './CartProduct';
 
 const Cart = () => {
   const [cart, setCart] = useRecoilState(cartAtom);
@@ -27,8 +27,8 @@ const Cart = () => {
 
   const clearCart = useClearCart();
 
-  const totalPrice = cart.attributes.products.reduce((acc, item) => {
-    return acc + item.quantity * item.attributes.price;
+  const totalPrice = cart.attributes.products.reduce((acc, product) => {
+    return acc + product.quantity * product.attributes.price;
   }, 0);
 
   return (
@@ -67,8 +67,8 @@ const Cart = () => {
           transition={{ delayChildren: 0.05, staggerChildren: 0.01 }}
           animate={cart.opened ? 'opened' : 'closed'}
         >
-          {cart.attributes.products.map((item) => (
-            <CartItem {...item} key={item.id + item.size} />
+          {cart.attributes.products.map((product) => (
+            <CartProduct {...product} key={product.id + product.size} />
           ))}
         </motion.div>
 
