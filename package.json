@@ -8,13 +8,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chec/commerce.js": "^2.8.0",
+    "@apollo/client": "^3.6.0",
     "@stripe/react-stripe-js": "^1.7.2",
     "@stripe/stripe-js": "^1.29.0",
     "axios": "^0.27.1",
     "express": "^4.17.3",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.0",
+    "graphql": "^16.4.0",
     "next": "latest",
     "popmotion": "^11.0.3",
     "react": "^17.0.2",
@@ -26,7 +27,6 @@
     "stripe": "^8.219.0"
   },
   "devDependencies": {
-    "@types/chec__commerce.js": "^2.8.5",
     "@types/express": "^4.17.13",
     "@types/node": "17.0.4",
     "@types/react": "17.0.38",

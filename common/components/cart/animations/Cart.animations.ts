@@ -11,18 +11,6 @@ export const cartAnimation = {
   },
 };
 
-export const cartItemAnimation = {
-  opened: {
-    x: 0,
-    transition: {
-      ease: defaultEase,
-    },
-  },
-  closed: {
-    x: 50,
-  },
-};
-
 export const bgAnimation = {
   opened: {
     opacity: 1,

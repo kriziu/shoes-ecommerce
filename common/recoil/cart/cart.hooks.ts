@@ -1,7 +1,5 @@
 import { useSetRecoilState } from 'recoil';
 
-import { commerceJS } from '@/common/lib/commerce';
-
 import { cartAtom } from './cart.atom';
 
 export const useToggleCart = (alwaysFalse = false) => {
@@ -15,79 +13,73 @@ export const useToggleCart = (alwaysFalse = false) => {
   };
 };
 
-export const useUpdateCart = () => {
-  const setCart = useSetRecoilState(cartAtom);
-
-  return (updating = true) => {
-    setCart((prevState) => ({
-      ...prevState,
-      updating,
-    }));
-  };
-};
-
 export const useAddToCart = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  const toggleCart = useToggleCart();
-  const updateCart = useUpdateCart();
+  return (product: SimpleProduct) => {
+    setCart((prev) => {
+      if (prev.attributes.products.some((p) => p.id === product.id)) {
+        return {
+          ...prev,
+          opened: true,
+          attributes: {
+            products: prev.attributes.products.map((p) =>
+              product.id === p.id ? { ...p, quantity: p.quantity + 1 } : p
+            ),
+          },
+        };
+      }
 
-  return (id: string) => {
-    updateCart();
-    toggleCart();
-
-    commerceJS.cart
-      .add(id)
-      .then((update) =>
-        setCart((prev) => ({ ...prev, ...update.cart, updating: false }))
-      );
+      return {
+        ...prev,
+        opened: true,
+        attributes: {
+          products: [...prev.attributes.products, { ...product, quantity: 1 }],
+        },
+      };
+    });
   };
 };
 
 export const useRemoveFromCart = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  const updateCart = useUpdateCart();
-
   return (id: string) => {
-    updateCart();
-
-    commerceJS.cart
-      .remove(id)
-      .then((update) =>
-        setCart((prev) => ({ ...prev, ...update.cart, updating: false }))
-      );
+    setCart((prev) => ({
+      ...prev,
+      attributes: {
+        products: prev.attributes.products.filter(
+          (product) => product.id !== id
+        ),
+      },
+    }));
   };
 };
 
 export const useUpdateItemQuantity = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  const updateCart = useUpdateCart();
-
   return (id: string, quantity: number) => {
-    updateCart();
-
-    commerceJS.cart
-      .update(id, { quantity })
-      .then((update) =>
-        setCart((prev) => ({ ...prev, ...update.cart, updating: false }))
-      );
+    setCart((prev) => ({
+      ...prev,
+      attributes: {
+        products: prev.attributes.products.map((product) =>
+          product.id === id ? { ...product, quantity } : product
+        ),
+      },
+    }));
   };
 };
 
-export const useRefreshCart = () => {
+export const useClearCart = () => {
   const setCart = useSetRecoilState(cartAtom);
 
-  const updateCart = useUpdateCart();
-
   return () => {
-    updateCart();
-
-    commerceJS.cart
-      .refresh()
-      .then((update) =>
-        setCart((prev) => ({ ...prev, ...update, updating: false }))
-      );
+    setCart((prev) => ({
+      ...prev,
+      attributes: {
+        products: [],
+      },
+    }));
   };
 };

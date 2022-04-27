@@ -7,16 +7,10 @@ import { BiPackage } from 'react-icons/bi';
 import { useClickAway } from 'react-use';
 import { useRecoilState } from 'recoil';
 
-import { commerceJS } from '@/common/lib/commerce';
 import cartAtom from '@/common/recoil/cart';
-import { useRefreshCart } from '@/common/recoil/cart/cart.hooks';
+import { useClearCart } from '@/common/recoil/cart/cart.hooks';
 
-import Spinner from '../../Loader/components/Spinner';
-import {
-  bgAnimation,
-  cartAnimation,
-  cartItemAnimation,
-} from '../animations/Cart.animations';
+import { bgAnimation, cartAnimation } from '../animations/Cart.animations';
 import CartItem from './CartItem';
 
 const Cart = () => {
@@ -29,15 +23,13 @@ const Cart = () => {
     () => cart.opened && setCart({ ...cart, opened: false })
   );
 
-  useEffect(() => {
-    commerceJS.cart
-      .retrieve()
-      .then((retrievedCart) =>
-        setCart((prev) => ({ ...prev, ...retrievedCart }))
-      );
-  }, [setCart]);
+  useEffect(() => {}, [setCart]);
 
-  const clearCart = useRefreshCart();
+  const clearCart = useClearCart();
+
+  const totalPrice = cart.attributes.products.reduce((acc, item) => {
+    return acc + item.quantity * item.attributes.price;
+  }, 0);
 
   return (
     <>
@@ -57,7 +49,7 @@ const Cart = () => {
         <div className="flex w-full items-center justify-between ">
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-semibold">
-              Cart ({cart.total_unique_items})
+              Cart ({cart.attributes.products.length})
             </h1>
             <button className="text-sm hover:underline" onClick={clearCart}>
               (Clear cart)
@@ -71,33 +63,18 @@ const Cart = () => {
           </button>
         </div>
         <motion.div
-          className={`overflow-overlay -mr-1 flex flex-1 flex-col gap-5 overflow-x-hidden p-1 ${
-            cart.updating &&
-            cart.total_unique_items !== 0 &&
-            'pointer-events-none animate-pulse'
-          }`}
+          className="overflow-overlay -mr-1 flex flex-1 flex-col gap-5 overflow-x-hidden p-1"
           transition={{ delayChildren: 0.05, staggerChildren: 0.01 }}
           animate={cart.opened ? 'opened' : 'closed'}
         >
-          {cart.total_unique_items === 0 && cart.updating && (
-            <div className="flex h-full w-full items-center justify-center">
-              <Spinner />
-            </div>
-          )}
-          {cart.line_items.map((item) => {
-            return (
-              <motion.div variants={cartItemAnimation} key={item.id}>
-                <CartItem {...item} />
-              </motion.div>
-            );
-          })}
+          {cart.attributes.products.map((item) => (
+            <CartItem {...item} key={item.id} />
+          ))}
         </motion.div>
 
         <div>
           <div className="mb-2 flex w-full flex-col items-start justify-between sm:mb-0 sm:flex-row sm:items-center">
-            <h3 className="text-xl font-semibold">
-              Total: {cart.subtotal.formatted_with_symbol}
-            </h3>
+            <h3 className="text-xl font-semibold">Total: €{totalPrice}</h3>
             <h4>
               <BiPackage className="mb-[2px] inline" /> calculated at checkout
             </h4>
@@ -106,11 +83,7 @@ const Cart = () => {
           <Link href="/checkout">
             <a
               className="btn block w-full text-center disabled:cursor-not-allowed"
-              onClick={(e) => {
-                if (cart.updating || cart.total_unique_items === 0)
-                  e.preventDefault();
-                else setCart({ ...cart, opened: false });
-              }}
+              onClick={() => setCart({ ...cart, opened: false })}
             >
               Checkout
             </a>

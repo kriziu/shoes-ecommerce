@@ -8,18 +8,13 @@ import filterAtom from '@/common/recoil/filter';
 const FilterPrice = () => {
   const [filter, setFilter] = useRecoilState(filterAtom);
 
-  const changePriceRange = (value: number, second = false, both = false) => {
-    if (both)
-      setFilter({
-        ...filter,
-        price: { ...filter.price, priceRange: [value, value] },
-      });
-    else if (!second) {
+  const changePriceRange = (value: number, second = false) => {
+    if (second) {
       setFilter({
         ...filter,
         price: {
           ...filter.price,
-          priceRange: [value, filter.price.priceRange[1]],
+          priceRange: [filter.price.priceRange[0], value],
         },
       });
     } else {
@@ -27,7 +22,7 @@ const FilterPrice = () => {
         ...filter,
         price: {
           ...filter.price,
-          priceRange: [filter.price.priceRange[0], value],
+          priceRange: [value, filter.price.priceRange[1]],
         },
       });
     }
@@ -43,16 +38,8 @@ const FilterPrice = () => {
 
     if (!numValue) return;
 
-    const firstVal = filter.price.priceRange[0];
-    const secondVal = filter.price.priceRange[1];
-
-    if (second) {
-      if (numValue < firstVal) {
-        changePriceRange(numValue, false, true);
-      } else changePriceRange(numValue, true);
-    } else if (secondVal !== -1 && numValue > secondVal) {
-      changePriceRange(numValue, false, true);
-    } else changePriceRange(numValue);
+    if (second) changePriceRange(numValue, true);
+    else changePriceRange(numValue);
   };
 
   const min =

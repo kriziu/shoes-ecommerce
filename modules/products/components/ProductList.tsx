@@ -1,4 +1,3 @@
-import { Product } from '@chec/commerce.js/types/product';
 import { useRecoilValue } from 'recoil';
 
 import filterAtom from '@/common/recoil/filter';
@@ -6,7 +5,7 @@ import filterAtom from '@/common/recoil/filter';
 import Filter from './Filter';
 import ProductComponent from './Product';
 
-const ProductList = ({ products }: { products: Product[] }) => {
+const ProductList = ({ products }: { products: SimpleProduct[] }) => {
   const filter = useRecoilValue(filterAtom);
 
   const categories: string[] = [];
@@ -27,25 +26,36 @@ const ProductList = ({ products }: { products: Product[] }) => {
 
   let filteredProducts = products.filter((product) => {
     if (categories.length > 0) {
-      if (
-        product.categories.some((category) =>
-          categories.includes(category.slug)
-        )
-      )
-        return true;
+      if (categories.includes(product.attributes.category)) return true;
       return false;
     }
     return true;
   });
 
+  if (filter.price.promotion)
+    filteredProducts = filteredProducts.filter(
+      (product) => product.attributes.promotionPrice
+    );
+
+  if (filter.price.priceRange[0] !== -1) {
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        (product.attributes.promotionPrice || product.attributes.price) >=
+        filter.price.priceRange[0]
+    );
+  }
+
+  if (filter.price.priceRange[1] !== -1) {
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        (product.attributes.promotionPrice || product.attributes.price) <=
+        filter.price.priceRange[1]
+    );
+  }
+
   if (colors.length > 0)
     filteredProducts = filteredProducts.filter((product) => {
-      if (
-        colors.includes(
-          (product.attributes[0].value as { value: string }[])[0].value
-        )
-      )
-        return true;
+      if (colors.includes(product.attributes.color)) return true;
       return false;
     });
 

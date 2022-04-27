@@ -1,11 +1,9 @@
 import { useState } from 'react';
 
-import { LineItem } from '@chec/commerce.js/types/line-item';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { useDebounce } from 'react-use';
 
 import { defaultEase } from '@/common/animations/easings';
 import { useToggleCart } from '@/common/recoil/cart';
@@ -15,38 +13,34 @@ import {
 } from '@/common/recoil/cart/cart.hooks';
 
 const CartItem = ({
-  image,
-  name,
-  permalink,
-  price,
-  quantity,
-  line_total,
   id,
-}: LineItem) => {
+  attributes: {
+    name,
+    price,
+    slug,
+    images: {
+      data: [image],
+    },
+  },
+  quantity,
+}: CartProduct) => {
   const [hover, setHover] = useState(false);
-  const [quantityState, setQuantityState] = useState(quantity);
 
   const toggleCart = useToggleCart(true);
   const removeItem = useRemoveFromCart();
   const updateQuantity = useUpdateItemQuantity();
 
-  useDebounce(
-    () => {
-      if (quantityState !== quantity) {
-        updateQuantity(id, quantityState);
-      }
-    },
-    800,
-    [quantityState]
-  );
+  const handleUpdateQuantity = (newQuantity: number) => {
+    updateQuantity(id, newQuantity);
+  };
 
   return (
     <motion.div
       className="flex h-28 items-start justify-between sm:h-32"
-      layoutId={id}
+      layoutId={`${id}-cart-item`}
     >
       <div className="flex flex-1">
-        <Link href={permalink} passHref>
+        <Link href={slug} passHref>
           <a
             className="h-28 w-28 overflow-hidden sm:h-32 sm:w-32"
             onClick={toggleCart}
@@ -63,9 +57,9 @@ const CartItem = ({
               animate={{ scale: hover ? 1.07 : 1 }}
             >
               <Image
-                src={image?.url || ''}
-                width={(image?.image_dimensions.width || 400) / 5}
-                height={(image?.image_dimensions.height || 400) / 5}
+                src={process.env.NEXT_PUBLIC_STRAPI_URL + image.attributes.url}
+                width={image.attributes.width / 5}
+                height={image.attributes.height / 5}
                 alt=""
                 layout="raw"
                 className=" object-cover"
@@ -88,15 +82,15 @@ const CartItem = ({
           <div className="flex items-center">
             <button
               className="p-2 transition-all hover:bg-zinc-200"
-              onClick={() => setQuantityState((prev) => prev + 1)}
+              onClick={() => handleUpdateQuantity(quantity + 1)}
             >
               <AiOutlinePlus />
             </button>
-            <p className="w-8 text-center">{quantityState}</p>
+            <p className="w-8 text-center">{quantity}</p>
             <button
               className="p-2 transition-all hover:bg-zinc-200"
               onClick={() =>
-                quantityState !== 1 && setQuantityState((prev) => prev - 1)
+                quantity !== 1 && handleUpdateQuantity(quantity - 1)
               }
             >
               <AiOutlineMinus />
@@ -106,8 +100,8 @@ const CartItem = ({
       </div>
       <div className="my-3 mr-2 flex h-full flex-col items-end justify-between text-right">
         <div>
-          <h4 className="font-semibold">{line_total.formatted_with_symbol}</h4>
-          <h5 className="mt-1 text-sm">{price.formatted_with_symbol}</h5>
+          <h4 className="font-semibold">€{price * quantity}</h4>
+          <h5 className="mt-1 text-sm">€{price}</h5>
         </div>
         <button className="btn mb-6 py-1 px-2" onClick={() => removeItem(id)}>
           Remove

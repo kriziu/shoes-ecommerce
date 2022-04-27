@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import type { Asset } from '@chec/commerce.js/types/asset';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { wrap } from 'popmotion';
@@ -13,7 +12,7 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const ProductGallery = ({ images }: { images: Asset[] }) => {
+const ProductGallery = ({ images }: { images: Image[] }) => {
   const [initial, setInitial] = useState(true);
 
   const [[page, direction], setPage] = useState([0, 0]);
@@ -51,10 +50,13 @@ const ProductGallery = ({ images }: { images: Asset[] }) => {
         className="h-full w-full"
       >
         <Image
-          src={images[imageIndex].url}
+          src={
+            process.env.NEXT_PUBLIC_STRAPI_URL +
+            images[imageIndex].attributes.url
+          }
           alt="Detail photo"
-          width={images[imageIndex].image_dimensions.width || 860}
-          height={images[imageIndex].image_dimensions.height || 1080}
+          width={images[imageIndex].attributes.width || 860}
+          height={images[imageIndex].attributes.height || 1080}
           className="pointer-events-none object-cover"
           layout="raw"
           priority

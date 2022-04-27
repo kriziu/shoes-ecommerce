@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Product } from '@chec/commerce.js/types/product';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,12 +8,18 @@ import { useTimeoutFn } from 'react-use';
 import { defaultEase } from '@/common/animations/easings';
 
 const ProductComponent = ({
-  image,
-  name,
-  price,
-  permalink,
-  categories,
-}: Product) => {
+  id,
+  attributes: {
+    name,
+    price,
+    promotionPrice,
+    category,
+    images: {
+      data: [image],
+    },
+    slug,
+  },
+}: SimpleProduct) => {
   const [active, setActive] = useState(false);
   const [overflow, setOverflow] = useState(false);
 
@@ -22,11 +27,9 @@ const ProductComponent = ({
     setOverflow(true);
   }, 200);
 
-  const category = categories[0]?.name || 'N/A';
-
   return (
-    <motion.div className="h-max w-max" layoutId={image?.id}>
-      <Link href={permalink} passHref>
+    <motion.div className="h-max w-max" layoutId={id}>
+      <Link href={slug} passHref>
         <a
           className={`block w-72 cursor-pointer ${
             overflow && 'overflow-hidden'
@@ -45,9 +48,9 @@ const ProductComponent = ({
           >
             <Image
               layout="raw"
-              width={(image?.image_dimensions.width || 864) / 3}
-              height={(image?.image_dimensions.height || 1080) / 3}
-              src={image?.url || ''}
+              width={image.attributes.width / 3}
+              height={image.attributes.height / 3}
+              src={process.env.NEXT_PUBLIC_STRAPI_URL + image.attributes.url}
               alt={name}
               className="h-full w-full object-cover"
             />
@@ -58,9 +61,16 @@ const ProductComponent = ({
       <div className="mt-2 flex justify-between px-2">
         <div>
           <h4 className="-mb-1 text-lg">{name}</h4>
-          <h5 className="text-zinc-500">{category}</h5>
+          <h5 className="text-zinc-500">
+            {category[0].toUpperCase() + category.slice(1)}
+          </h5>
         </div>
-        <h4 className="text-lg">{price.formatted_with_symbol}</h4>
+        <div className="text-right">
+          <h4 className="-mb-1 text-lg">€{promotionPrice || price}</h4>
+          {promotionPrice && (
+            <h5 className="text-zinc-500 line-through">€{price}</h5>
+          )}
+        </div>
       </div>
     </motion.div>
   );

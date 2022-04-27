@@ -1,15 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react';
 
-import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
-import { Live } from '@chec/commerce.js/types/live';
 import { useRecoilValue } from 'recoil';
 
 import CartItem from '@/common/components/cart/components/CartItem';
-import { commerceJS } from '@/common/lib/commerce';
 import cartAtom from '@/common/recoil/cart';
 
 interface Props {
-  checkout: CheckoutToken;
+  checkout: any;
   resetCheckout: () => void;
   generating: boolean;
 }
@@ -19,7 +16,7 @@ const PriceDetails = ({ checkout, resetCheckout, generating }: Props) => {
 
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
-  const [liveObject, setLiveObject] = useState<Live>(checkout.live);
+  const [liveObject, setLiveObject] = useState<any>(checkout.live);
 
   useEffect(() => {
     setLiveObject(checkout.live);
@@ -32,10 +29,6 @@ const PriceDetails = ({ checkout, resetCheckout, generating }: Props) => {
   const handleDiscountCodeEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    commerceJS.checkout
-      .checkDiscount(checkout.id, { code })
-      .then((response) => setLiveObject(response.live))
-      .then(() => setLoading(false));
   };
 
   return (
@@ -47,7 +40,7 @@ const PriceDetails = ({ checkout, resetCheckout, generating }: Props) => {
       <h1 className="text-5xl font-bold xl:text-6xl">Products</h1>
 
       <div className="mb-5 flex flex-1 flex-col gap-5 p-1 lg:overflow-scroll">
-        {cart.line_items.map((item) => (
+        {cart.attributes.products.map((item) => (
           <CartItem {...item} key={item.id} />
         ))}
       </div>

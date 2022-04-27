@@ -8,19 +8,15 @@ import { defaultEase } from '@/common/animations/easings';
 
 interface Props {
   selected?: boolean;
-  image: {
-    id: string;
-    url: string;
-    image_dimensions: { height: number; width: number };
-  } | null;
-  permalink: string;
+  image: Image;
+  slug: string;
 }
 
-const ProductVariant = ({ selected = false, image, permalink }: Props) => {
+const ProductVariant = ({ selected = false, image, slug }: Props) => {
   const [active, setActive] = useState(false);
 
   return (
-    <Link href={permalink}>
+    <Link href={slug}>
       <a
         className={`block h-32 w-32 cursor-pointer overflow-hidden rounded-md ${
           selected && 'border-2 border-black'
@@ -40,11 +36,11 @@ const ProductVariant = ({ selected = false, image, permalink }: Props) => {
           className="h-full w-full"
         >
           <Image
-            src={image?.url || ''}
+            src={process.env.NEXT_PUBLIC_STRAPI_URL + image.attributes.url}
             alt="Product variant"
             layout="raw"
-            width={(image?.image_dimensions.width || 864) / 5}
-            height={(image?.image_dimensions.height || 1080) / 5}
+            width={image.attributes.width / 5}
+            height={image.attributes.height / 5}
             className="h-full w-full object-cover"
           />
         </motion.div>

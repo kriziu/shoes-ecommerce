@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Product } from '@chec/commerce.js/types/product';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -14,16 +13,7 @@ import Size from './Size';
 
 const sizes = [42, 42.5, 43, 43.5, 44];
 
-const ProductDetails = ({
-  image,
-  name,
-  description,
-  related_products,
-  permalink,
-  id,
-  price,
-  assets,
-}: Product) => {
+const ProductDetails = ({ product }: { product: Product }) => {
   const { slug } = useRouter().query;
 
   const [selectedSize, setSelectedSize] = useState(42);
@@ -32,20 +22,18 @@ const ProductDetails = ({
 
   if (!slug) return null;
 
+  const {
+    id,
+    attributes: { name, description, images, price, products },
+  } = product;
+
   return (
     <div className="mt-24 flex flex-col items-center justify-center px-0 sm:px-5 md:px-10 lg:px-36 xl:flex-row xl:items-start xl:gap-12 xl:px-0 2xl:gap-24">
       <motion.div
-        layoutId={image?.id}
+        layoutId={id}
         className="relative flex h-full justify-end overflow-hidden xl:w-[50%] 2xl:min-w-[50%]"
       >
-        <ProductGallery images={assets} />
-        {/* <Image
-          src={image?.url || ''}
-          layout="raw"
-          width={image?.image_dimensions.width || 864}
-          height={image?.image_dimensions.height || 1080}
-          alt={name}
-        /> */}
+        <ProductGallery images={images.data} />
       </motion.div>
 
       <div className="mt-5 flex flex-1 justify-between px-2">
@@ -62,18 +50,20 @@ const ProductDetails = ({
             </p>
           </div>
 
-          <h3 className="mt-10 text-3xl 2xl:text-4xl">
-            {price.formatted_with_symbol}
-          </h3>
+          <h3 className="mt-10 text-3xl 2xl:text-4xl">€{price}</h3>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            <ProductVariant selected image={image} permalink={permalink} />
-            {related_products.map((relatedProduct) => {
+            <ProductVariant
+              selected
+              image={images.data[0]}
+              slug={slug.toString()}
+            />
+            {products.data.map((relatedProduct) => {
               return (
                 <ProductVariant
                   key={relatedProduct.id}
-                  image={relatedProduct.image}
-                  permalink={relatedProduct.permalink}
+                  image={relatedProduct.attributes.images.data[0]}
+                  slug={relatedProduct.attributes.slug}
                 />
               );
             })}
@@ -104,7 +94,10 @@ const ProductDetails = ({
             View product details
           </p>
 
-          <button className="btn mt-7 text-xl" onClick={() => addToCart(id)}>
+          <button
+            className="btn mt-7 text-xl"
+            onClick={() => addToCart(product)}
+          >
             Add to cart
           </button>
 
