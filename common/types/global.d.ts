@@ -29,16 +29,22 @@ export declare global {
       description: string;
       promotionPrice: number | null;
       color: string;
-      products: {
+      productVariants: {
         data: {
-          id: string;
           attributes: {
-            slug: string;
-            images: {
-              data: Image[];
+            products: {
+              data: {
+                id: string;
+                attributes: {
+                  slug: string;
+                  images: {
+                    data: Image[];
+                  };
+                };
+              }[];
             };
           };
-        }[];
+        };
       };
       reviews: {
         data: {

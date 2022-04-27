@@ -24,7 +24,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
 
   const {
     id,
-    attributes: { name, description, images, price, products },
+    attributes: { name, description, images, price, productVariants },
   } = product;
 
   return (
@@ -58,15 +58,17 @@ const ProductDetails = ({ product }: { product: Product }) => {
               image={images.data[0]}
               slug={slug.toString()}
             />
-            {products.data.map((relatedProduct) => {
-              return (
-                <ProductVariant
-                  key={relatedProduct.id}
-                  image={relatedProduct.attributes.images.data[0]}
-                  slug={relatedProduct.attributes.slug}
-                />
-              );
-            })}
+            {productVariants.data.attributes.products.data
+              .filter((p) => p.id !== id)
+              .map((relatedProduct) => {
+                return (
+                  <ProductVariant
+                    key={relatedProduct.id}
+                    image={relatedProduct.attributes.images.data[0]}
+                    slug={relatedProduct.attributes.slug}
+                  />
+                );
+              })}
           </div>
 
           <div className="mt-7 flex items-center gap-2">
