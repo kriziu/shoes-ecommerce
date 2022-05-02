@@ -21,7 +21,7 @@ const CheckoutForm = () => {
   return (
     <div>
       <h1 className="text-5xl font-bold xl:text-6xl">Your details</h1>
-      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
+      <form onSubmit={formik.handleSubmit} className="ml-4 flex flex-col gap-3">
         <div className={containerStyle}>
           <label htmlFor="name">Name</label>
           <input

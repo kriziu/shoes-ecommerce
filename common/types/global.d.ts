@@ -83,4 +83,10 @@ export declare global {
     };
     opened: boolean;
   }
+
+  interface DiscountCode {
+    code: string;
+    value: number;
+    type: 'flat' | 'percentage';
+  }
 }

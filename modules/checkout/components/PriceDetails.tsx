@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 
+import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 
 import CartProduct from '@/common/components/cart/components/CartProduct';
@@ -10,15 +11,34 @@ const PriceDetails = () => {
 
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
+  const [appliedCode, setAppliedCode] = useState<DiscountCode>();
 
   const handleDiscountCodeEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setLoading(true);
+    setLoading(true);
+    axios
+      .post<DiscountCode>('/api/check-discount', { discountCode: code })
+      .then((res) => setAppliedCode(res.data))
+      .then(() => setLoading(false))
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
-  const totalPrice = cart.attributes.products.reduce((acc, item) => {
+  const handleDiscountCodeRemove = () => {
+    setAppliedCode(undefined);
+  };
+
+  let totalPrice = cart.attributes.products.reduce((acc, item) => {
     return acc + item.quantity * item.attributes.price;
   }, 0);
+
+  if (appliedCode)
+    totalPrice -=
+      appliedCode.type === 'percentage'
+        ? (appliedCode.value * totalPrice) / 100
+        : appliedCode.value;
 
   return (
     <div
@@ -35,22 +55,20 @@ const PriceDetails = () => {
       </div>
 
       <div>
-        {/* {!Array.isArray('123') && (
+        {appliedCode && (
           <>
             <p className="font-semibold">Applied discount code</p>
 
             <button
               className="block w-max rounded-lg bg-zinc-200 px-2 py-1 font-semibold text-zinc-500 transition-all hover:bg-red-500 hover:text-red-300"
+              onClick={handleDiscountCodeRemove}
             >
-              {liveObject.discount.code} (-
-              {liveObject.discount.type === 'percentage'
-                ? `${liveObject.discount.value}%`
-                : liveObject.discount.amount_saved.formatted_with_symbol}
-              )
+              {appliedCode.code} (-{appliedCode.value}
+              {appliedCode.type === 'percentage' ? '%' : '€'})
             </button>
           </>
-        )} */}
-        {Array.isArray([]) && (
+        )}
+        {!appliedCode && (
           <form
             className="flex w-48 flex-col"
             onSubmit={handleDiscountCodeEnter}
