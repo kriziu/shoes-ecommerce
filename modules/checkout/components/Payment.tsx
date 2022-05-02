@@ -3,18 +3,34 @@ import { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+
+import cartAtom from '@/common/recoil/cart';
 
 import StripeCheckout from './StripeCheckout';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY || '');
 
-const Payment = ({ amount }: { amount: number }) => {
+const Payment = ({
+  appliedCode,
+}: {
+  appliedCode: DiscountCode | undefined;
+}) => {
+  const cart = useRecoilValue(cartAtom);
+
   const [clientSecret, setClientSecret] = useState('');
 
   useEffect(() => {
-    axios.post('/api/create-payment', { amount }).then(({ data }) => {
-      setClientSecret(data.clientSecret);
-    });
+    axios
+      .post('/api/create-payment', {
+        cart,
+        appliedCode,
+      })
+      .then(({ data }) => {
+        setClientSecret(data.clientSecret);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const options: StripeElementsOptions = {

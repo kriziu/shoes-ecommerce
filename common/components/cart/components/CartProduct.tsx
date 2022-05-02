@@ -19,6 +19,7 @@ const CartProduct = ({
     name,
     price,
     slug,
+    promotionPrice,
     images: {
       data: [image],
     },
@@ -104,8 +105,10 @@ const CartProduct = ({
       </div>
       <div className="my-3 mr-2 flex h-full flex-col items-end justify-between text-right">
         <div>
-          <h4 className="font-semibold">€{price * quantity}</h4>
-          <h5 className="mt-1 text-sm">€{price}</h5>
+          <h4 className="font-semibold">
+            €{(promotionPrice || price) * quantity}
+          </h4>
+          <h5 className="mt-1 text-sm">€{promotionPrice || price}</h5>
         </div>
         <button
           className="btn mb-6 py-1 px-2"

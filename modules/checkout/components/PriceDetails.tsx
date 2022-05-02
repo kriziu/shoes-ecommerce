@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
@@ -6,12 +6,21 @@ import { useRecoilValue } from 'recoil';
 import CartProduct from '@/common/components/cart/components/CartProduct';
 import cartAtom from '@/common/recoil/cart';
 
-const PriceDetails = () => {
+interface Props {
+  appliedCode: DiscountCode | undefined;
+  setAppliedCode: Dispatch<SetStateAction<DiscountCode | undefined>>;
+  handlePayment: () => void;
+}
+
+const PriceDetails = ({
+  appliedCode,
+  setAppliedCode,
+  handlePayment,
+}: Props) => {
   const cart = useRecoilValue(cartAtom);
 
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
-  const [appliedCode, setAppliedCode] = useState<DiscountCode>();
 
   const handleDiscountCodeEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,24 +29,24 @@ const PriceDetails = () => {
       .post<DiscountCode>('/api/check-discount', { discountCode: code })
       .then((res) => setAppliedCode(res.data))
       .then(() => setLoading(false))
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+      .catch(() => setLoading(false));
   };
 
   const handleDiscountCodeRemove = () => {
     setAppliedCode(undefined);
   };
 
-  let totalPrice = cart.attributes.products.reduce((acc, item) => {
-    return acc + item.quantity * item.attributes.price;
+  let totalAmount = cart.attributes.products.reduce((acc, item) => {
+    return (
+      acc +
+      item.quantity * (item.attributes.promotionPrice || item.attributes.price)
+    );
   }, 0);
 
   if (appliedCode)
-    totalPrice -=
+    totalAmount -=
       appliedCode.type === 'percentage'
-        ? (appliedCode.value * totalPrice) / 100
+        ? (appliedCode.value * totalAmount) / 100
         : appliedCode.value;
 
   return (
@@ -88,8 +97,11 @@ const PriceDetails = () => {
           </form>
         )}
 
-        <h2 className="mt-5 text-2xl">Total: €{totalPrice}</h2>
+        <h2 className="mt-5 text-2xl">Total: €{totalAmount}</h2>
       </div>
+      <button className="btn mt-2" onClick={handlePayment}>
+        Pay
+      </button>
     </div>
   );
 };

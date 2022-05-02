@@ -28,7 +28,11 @@ const Cart = () => {
   const clearCart = useClearCart();
 
   const totalPrice = cart.attributes.products.reduce((acc, product) => {
-    return acc + product.quantity * product.attributes.price;
+    return (
+      acc +
+      product.quantity *
+        (product.attributes.promotionPrice || product.attributes.price)
+    );
   }, 0);
 
   return (
