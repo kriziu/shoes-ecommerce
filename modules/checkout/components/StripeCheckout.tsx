@@ -6,7 +6,13 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 
-const StripeCheckout = () => {
+interface Props {
+  amount: number;
+  paymentId: string;
+  orderId: string;
+}
+
+const StripeCheckout = ({ amount, paymentId, orderId }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -25,7 +31,9 @@ const StripeCheckout = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'http://localhost:3000',
+        return_url: window
+          ? `${window.location.origin}/api/confirm-payment?paymentId=${paymentId}&orderId=${orderId}`
+          : '',
       },
     });
 
@@ -40,13 +48,16 @@ const StripeCheckout = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2 className="mb-5 text-center text-3xl font-semibold">
+        €{amount.toFixed(2)}
+      </h2>
       <PaymentElement />
       <button
         type="submit"
         disabled={isLoading || !stripe || !elements}
         className="btn mt-5 w-full"
       >
-        Pay
+        Secure Pay
       </button>
 
       {message && <div id="payment-message">{message}</div>}

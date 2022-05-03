@@ -86,7 +86,7 @@ const Cart = () => {
 
           <Link href="/checkout">
             <a
-              className="btn block w-full text-center disabled:cursor-not-allowed"
+              className="btn block w-full text-center"
               onClick={() => setCart({ ...cart, opened: false })}
             >
               Checkout

@@ -32,9 +32,7 @@ const PriceDetails = ({
       .catch(() => setLoading(false));
   };
 
-  const handleDiscountCodeRemove = () => {
-    setAppliedCode(undefined);
-  };
+  const handleDiscountCodeRemove = () => setAppliedCode(undefined);
 
   let totalAmount = cart.attributes.products.reduce((acc, item) => {
     return (
@@ -53,7 +51,7 @@ const PriceDetails = ({
     <div
       className={`${
         loading && 'pointer-events-none animate-pulse'
-      } flex flex-col lg:h-3/4`}
+      } flex flex-col lg:h-3/4 lg:w-[30rem]`}
     >
       <h1 className="text-5xl font-bold xl:text-6xl">Products</h1>
 
@@ -99,7 +97,12 @@ const PriceDetails = ({
 
         <h2 className="mt-5 text-2xl">Total: €{totalAmount}</h2>
       </div>
-      <button className="btn mt-2" onClick={handlePayment}>
+      <button
+        className="btn mt-2 disabled:cursor-not-allowed disabled:opacity-70"
+        onClick={() => cart.attributes.products.length !== 0 && handlePayment()}
+        type="submit"
+        disabled={cart.attributes.products.length === 0}
+      >
         Pay
       </button>
     </div>

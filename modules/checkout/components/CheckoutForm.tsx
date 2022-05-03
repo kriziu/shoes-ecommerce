@@ -1,10 +1,35 @@
 const containerStyle = 'flex flex-col';
 
-const CheckoutForm = ({ formik }: { formik: any }) => {
+interface Props {
+  formik: {
+    values: {
+      name: string;
+      address: string;
+      city: string;
+      postCode: string;
+      country: string;
+      email: string;
+      phone: string;
+    };
+    errors: {
+      name?: string;
+      address?: string;
+      city?: string;
+      postCode?: string;
+      country?: string;
+      email?: string;
+      phone?: string;
+    };
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  };
+}
+
+const CheckoutForm = ({ formik }: Props) => {
   return (
     <div>
       <h1 className="text-5xl font-bold xl:text-6xl">Your details</h1>
-      <form onSubmit={formik.handleSubmit} className="ml-4 flex flex-col gap-3">
+      <form className="ml-4 flex flex-col gap-3">
         <div className={containerStyle}>
           <label htmlFor="name">Name</label>
           <input
@@ -12,9 +37,14 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="name"
             id="name"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.name}
             className="input"
           />
+
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.name}
+          </div>
         </div>
 
         <div className={containerStyle}>
@@ -24,9 +54,14 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="address"
             id="address"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.address}
             className="input"
           />
+
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.address}
+          </div>
         </div>
 
         <div className={containerStyle}>
@@ -36,9 +71,13 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="city"
             id="city"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.city}
             className="input"
           />
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.city}
+          </div>
         </div>
 
         <div className={containerStyle}>
@@ -48,9 +87,13 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="postCode"
             id="postCode"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.postCode}
             className="input"
           />
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.postCode}
+          </div>
         </div>
 
         <div className={containerStyle}>
@@ -60,9 +103,13 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="country"
             id="country"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.country}
             className="input"
           />
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.country}
+          </div>
         </div>
 
         <div className={containerStyle}>
@@ -72,9 +119,13 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="email"
             id="email"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.email}
             className="input"
           />
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.email}
+          </div>
         </div>
 
         <div className={containerStyle}>
@@ -84,9 +135,13 @@ const CheckoutForm = ({ formik }: { formik: any }) => {
             name="phone"
             id="phone"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.phone}
             className="input"
           />
+          <div className="h-4 text-xs italic text-red-500">
+            {formik.errors.phone}
+          </div>
         </div>
       </form>
     </div>

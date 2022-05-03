@@ -1,4 +1,6 @@
 import { modalAtom } from './modal.atom';
-import {} from './modal.hooks';
+import { useModal } from './modal.hooks';
 
 export default modalAtom;
+
+export { useModal };

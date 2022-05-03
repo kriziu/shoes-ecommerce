@@ -2,15 +2,25 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 import checkDiscount from '@/common/lib/checkDiscount';
+import stripeLogin from '@/common/lib/stripeLogin';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2020-08-27',
 });
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { cart, appliedCode } = req.body as {
+  const { cart, appliedCode, values } = req.body as {
     cart: Cart | undefined;
     appliedCode: DiscountCode | undefined;
+    values: {
+      email: string;
+      name: string;
+      phone: string;
+      address: string;
+      city: string;
+      postCode: string;
+      country: string;
+    };
   };
 
   if (!cart) {
@@ -64,8 +74,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  console.log(amount);
-
   const paymentIntent = await stripe.paymentIntents.create({
     amount: amount * 100,
     currency: 'eur',
@@ -74,9 +82,44 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
+  const jwt = await stripeLogin();
+
+  const sizes = new Map<string, number>();
+  cart.attributes.products.forEach((product) => {
+    sizes.set(product.attributes.slug, product.size);
+  });
+
+  const newOrder = await fetch(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/orders`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        data: {
+          ...values,
+          address: {
+            ...values,
+            street: values.address,
+          },
+          products: cart.attributes.products.map((product) => product.id),
+          totalValue: amount,
+          usedDiscount: !!appliedCode,
+          paymentId: paymentIntent.id,
+          paid: false,
+          sizes: Object.fromEntries(sizes),
+        },
+      }),
+    }
+  ).then((response) => response.json());
+
   return res.status(201).json({
     clientSecret: paymentIntent.client_secret,
-    id: paymentIntent.id,
+    paymentId: paymentIntent.id,
+    amount,
+    orderId: newOrder.data.id,
   });
 };
 
