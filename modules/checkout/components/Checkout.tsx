@@ -89,7 +89,7 @@ const Checkout = () => {
     );
 
   return (
-    <div className="mt-10 flex flex-col justify-between lg:h-screen lg:flex-row 2xl:mt-20 2xl:justify-center 2xl:gap-96">
+    <div className="mt-10 flex flex-col justify-between gap-10 lg:h-screen lg:flex-row 2xl:mt-20 2xl:justify-center 2xl:gap-64">
       <CheckoutForm formik={customerDetails} />
       <PriceDetails
         appliedCode={appliedCode}

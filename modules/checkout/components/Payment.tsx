@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 
 import Spinner from '@/common/components/Loader/components/Spinner';
 import cartAtom from '@/common/recoil/cart';
+import { useClearCart } from '@/common/recoil/cart/cart.hooks';
 
 import StripeCheckout from './StripeCheckout';
 
@@ -36,6 +37,8 @@ const Payment = ({ appliedCode, values }: Props) => {
     orderId: string;
   }>();
 
+  const clearCart = useClearCart();
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -54,6 +57,8 @@ const Payment = ({ appliedCode, values }: Props) => {
           orderId,
         });
         setLoading(false);
+
+        clearCart();
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

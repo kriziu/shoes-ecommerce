@@ -27,9 +27,9 @@ interface Props {
 
 const CheckoutForm = ({ formik }: Props) => {
   return (
-    <div>
+    <div className="mx-4 lg:mx-0 lg:w-[25rem]">
       <h1 className="text-5xl font-bold xl:text-6xl">Your details</h1>
-      <form className="ml-4 flex flex-col gap-3">
+      <form className=" flex flex-col gap-3">
         <div className={containerStyle}>
           <label htmlFor="name">Name</label>
           <input
