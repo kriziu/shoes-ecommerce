@@ -1,3 +1,7 @@
+import Image from 'next/image';
+
+import DHL from '@/public/img/DHL.webp';
+
 const containerStyle = 'flex flex-col';
 
 interface Props {
@@ -144,6 +148,15 @@ const CheckoutForm = ({ formik }: Props) => {
           </div>
         </div>
       </form>
+      <h3 className="font-bold">Shopping via:</h3>
+      <Image
+        src={DHL}
+        alt="DHL"
+        className="w-48"
+        layout="raw"
+        width={400}
+        height={100}
+      />
     </div>
   );
 };

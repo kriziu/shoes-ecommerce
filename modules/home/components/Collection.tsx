@@ -20,6 +20,8 @@ const Collection = ({ right = false, title, subtitle, image }: Props) => {
           src={image}
           alt={title}
           layout="raw"
+          width={400}
+          height={500}
           className="h-full w-full object-cover object-center"
           placeholder="blur"
         />
