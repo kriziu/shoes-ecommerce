@@ -12,6 +12,7 @@ import { useClearCart } from '@/common/recoil/cart/cart.hooks';
 
 import { bgAnimation, cartAnimation } from '../animations/Cart.animations';
 import CartProduct from './CartProduct';
+import axios from 'axios';
 
 const Cart = () => {
   const [cart, setCart] = useRecoilState(cartAtom);
@@ -84,13 +85,16 @@ const Cart = () => {
             </h4>
           </div>
 
-          <Link href="/checkout">
-            <a
+          <Link href="/checkout" passHref>
+            <button
               className="btn block w-full text-center"
-              onClick={() => setCart({ ...cart, opened: false })}
+              onClick={() => {
+                setCart({ ...cart, opened: false });
+                axios.post('/api/send-email');
+              }}
             >
               Checkout
-            </a>
+            </button>
           </Link>
         </div>
       </motion.div>

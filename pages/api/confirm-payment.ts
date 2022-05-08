@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
+import { transporter } from '@/common/lib/email';
 import stripeLogin from '@/common/lib/stripeLogin';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -14,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const payment = await stripe.paymentIntents.retrieve(paymentId.toString());
 
-  if (payment.status === 'succeeded')
+  if (payment.status === 'succeeded') {
     await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/orders/${orderId.toString()}`,
       {
@@ -31,7 +32,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     );
 
-  return res.redirect('/shoes');
+    transporter
+      .sendMail({
+        from: '"Shoes Ecommerce" <noreply@email.com>',
+        to: 'buck.jones16@ethereal.email',
+        subject: 'Order received',
+        html: `<p style="font-size: 40px;">Order ${orderId} has been received!</p>`,
+      })
+      .then(() => console.log('Email sent!'));
+  }
+
+  return res.redirect('/new-order');
 };
 
 export default handler;

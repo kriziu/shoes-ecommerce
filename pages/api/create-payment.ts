@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 import checkDiscount from '@/common/lib/checkDiscount';
+import { transporter } from '@/common/lib/email';
 import stripeLogin from '@/common/lib/stripeLogin';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -114,6 +115,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }),
     }
   ).then((response) => response.json());
+
+  setTimeout(async () => {
+    const stripePayment = await stripe.paymentIntents.retrieve(
+      paymentIntent.id
+    );
+
+    if (stripePayment.status !== 'succeeded')
+      transporter.sendMail({
+        from: '"Shoes Ecommerce" <noreply>',
+        to: values.email,
+        subject: `Pay for your order ${newOrder.data.id}.`,
+        text: `Please pay for this order using the following link:`,
+      });
+  }, 1000 * 30 * 1);
 
   return res.status(201).json({
     clientSecret: paymentIntent.client_secret,
