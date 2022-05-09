@@ -6,7 +6,10 @@ import { useRouter } from 'next/router';
 import { AiFillStar } from 'react-icons/ai';
 
 import { useAddToCart } from '@/common/recoil/cart/cart.hooks';
+import { useModal } from '@/common/recoil/modal';
 
+import ProductDetailsModal from '../modals/ProductDetailsModal';
+import SizeGuide from '../modals/SizeGuide';
 import ProductGallery from './ProductGallery';
 import ProductVariant from './ProductVariant';
 import Size from './Size';
@@ -19,6 +22,8 @@ const ProductDetails = ({ product }: { product: Product }) => {
   const [selectedSize, setSelectedSize] = useState(product.attributes.sizes[0]);
 
   const addToCart = useAddToCart();
+
+  const { openModal } = useModal();
 
   if (!slug) return null;
 
@@ -45,9 +50,9 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <div className="flex items-center gap-1 text-lg">
             <p className="mb-[-2px]">4.7</p>
             <AiFillStar />
-            <p className="cursor-pointer text-base text-zinc-500 hover:underline">
+            <button className="cursor-pointer text-base text-zinc-500 hover:underline">
               (Show rates)
-            </p>
+            </button>
           </div>
 
           <h3 className="mt-10 text-3xl 2xl:text-4xl">€{price}</h3>
@@ -69,9 +74,12 @@ const ProductDetails = ({ product }: { product: Product }) => {
 
           <div className="mt-7 flex items-center gap-2">
             <h4 className="text-xl font-semibold">Select size</h4>
-            <h5 className="mt-[2px] cursor-pointer text-zinc-500 hover:underline">
+            <button
+              className="mt-[2px] cursor-pointer text-zinc-500 hover:underline"
+              onClick={() => openModal(<SizeGuide />)}
+            >
               (Size guide)
-            </h5>
+            </button>
           </div>
           <div className="mt-2 flex w-full flex-wrap gap-5">
             {(sizes || defaultSizes).map((size) => (
@@ -87,9 +95,12 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <p className="mt-7 2xl:w-2/3">
             {description.replace(/<\/?[^>]+(>|$)/g, '')}
           </p>
-          <p className="cursor-pointer text-xs text-zinc-500 underline">
+          <button
+            className="block cursor-pointer text-xs text-zinc-500 underline"
+            onClick={() => openModal(<ProductDetailsModal />)}
+          >
             View product details
-          </p>
+          </button>
 
           <button
             className="btn mt-7 text-xl"

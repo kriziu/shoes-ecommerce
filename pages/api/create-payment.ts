@@ -124,14 +124,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     if (stripePayment.status !== 'succeeded') {
-      // transporter.sendMail({
-      //   from: '"Shoes Ecommerce" <noreply>',
-      //   to: values.email,
-      //   subject: `Pay for your order ${newOrder.data.id}.`,
-      //   text: `Please pay for this order using the following link:`,
-      // });
+      // SEND EMAIL WITH PAYMENT LINK
     }
-  }, 1000 * 30 * 1);
+  }, 1000 * 5 * 1);
 
   return res.status(201).json({
     clientSecret: paymentIntent.client_secret,
