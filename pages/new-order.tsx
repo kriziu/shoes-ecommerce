@@ -48,7 +48,6 @@ export default NewOrderPage;
 
 // TODO:
 // 3. Send emails on checkout (make sure to send customer payment link if payment is not successful)
-// 3.1. Make email auth details in .env file
 // 4. Add login/register
 // 5. Add customer page, where customer can edit email, password, etc. and see orders
 // 6. Add reviews

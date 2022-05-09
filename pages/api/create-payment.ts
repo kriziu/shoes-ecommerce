@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 import checkDiscount from '@/common/lib/checkDiscount';
-import { transporter } from '@/common/lib/email';
 import stripeLogin from '@/common/lib/stripeLogin';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -85,9 +84,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const jwt = await stripeLogin();
 
-  const sizes = new Map<string, number>();
+  const variants = new Map<string, number>();
   cart.attributes.products.forEach((product) => {
-    sizes.set(product.attributes.slug, product.size);
+    variants.set(
+      `${product.attributes.slug}:${product.size}`,
+      product.quantity
+    );
   });
 
   const newOrder = await fetch(
@@ -110,7 +112,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           usedDiscount: !!appliedCode,
           paymentId: paymentIntent.id,
           paid: false,
-          sizes: Object.fromEntries(sizes),
+          variants: Object.fromEntries(variants),
         },
       }),
     }
@@ -121,13 +123,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       paymentIntent.id
     );
 
-    if (stripePayment.status !== 'succeeded')
-      transporter.sendMail({
-        from: '"Shoes Ecommerce" <noreply>',
-        to: values.email,
-        subject: `Pay for your order ${newOrder.data.id}.`,
-        text: `Please pay for this order using the following link:`,
-      });
+    if (stripePayment.status !== 'succeeded') {
+      // transporter.sendMail({
+      //   from: '"Shoes Ecommerce" <noreply>',
+      //   to: values.email,
+      //   subject: `Pay for your order ${newOrder.data.id}.`,
+      //   text: `Please pay for this order using the following link:`,
+      // });
+    }
   }, 1000 * 30 * 1);
 
   return res.status(201).json({

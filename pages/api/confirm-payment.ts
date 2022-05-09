@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
-import { transporter } from '@/common/lib/email';
+import { mailer } from '@/common/lib/email';
 import stripeLogin from '@/common/lib/stripeLogin';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -16,30 +16,64 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const payment = await stripe.paymentIntents.retrieve(paymentId.toString());
 
   if (payment.status === 'succeeded') {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/orders/${orderId.toString()}`,
+    const order: { data: { updateOrder: Order } } = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/graphql`,
       {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${jwt}`,
         },
         body: JSON.stringify({
-          data: {
-            paid: true,
-          },
+          query: `
+            mutation ($id: ID!) {
+              updateOrder(id: $id, data: { paid: true }) {
+                data {
+                  id
+                  attributes {
+                    products {
+                      data {
+                        id
+                        attributes {
+                          name
+                          price
+                          category
+                          slug
+                          promotionPrice
+                          color
+                          images {
+                            data {
+                              id
+                              attributes {
+                                width
+                                height
+                                url
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    email
+                    variants
+                    totalValue
+                  }
+                }
+              }
+            }
+      `,
+          variables: { id: orderId },
         }),
       }
-    );
+    ).then((response) => response.json());
 
-    transporter
-      .sendMail({
-        from: '"Shoes Ecommerce" <noreply@email.com>',
-        to: 'buck.jones16@ethereal.email',
-        subject: 'Order received',
-        html: `<p style="font-size: 40px;">Order ${orderId} has been received!</p>`,
-      })
-      .then(() => console.log('Email sent!'));
+    mailer.send(
+      'ReceivedEmail',
+      { order: order.data.updateOrder },
+      {
+        to: order.data.updateOrder.data.attributes.email,
+      }
+    );
   }
 
   return res.redirect('/new-order');

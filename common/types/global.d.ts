@@ -89,4 +89,16 @@ export declare global {
     value: number;
     type: 'flat' | 'percentage';
   }
+
+  interface Order {
+    data: {
+      id: number;
+      attributes: {
+        email: string;
+        totalValue: number;
+        variants: { [slug: string]: number };
+        products: { data: SimpleProduct[] };
+      };
+    };
+  }
 }

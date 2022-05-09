@@ -16,7 +16,7 @@ const Footer = () => {
         >
           kriziu
         </a>
-        , All product images from{' '}
+        , all product images from{' '}
         <a
           href="https://nike.com"
           target="_blank"
