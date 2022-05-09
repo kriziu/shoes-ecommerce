@@ -22,7 +22,7 @@ const containerAnimation = {
 const NewOrderPage: NextPage = () => {
   return (
     <motion.div
-      className="mt-48 flex w-full flex-col items-center p-5"
+      className="mt-24 flex w-full flex-col items-center p-5 md:mt-48"
       variants={containerAnimation}
       initial="from"
       animate="to"
@@ -45,8 +45,3 @@ const NewOrderPage: NextPage = () => {
 };
 
 export default NewOrderPage;
-
-// TODO:
-// 4. Add login/register
-// 5. Add customer page, where customer can edit email, password, etc. and see orders
-// 6. Add reviews

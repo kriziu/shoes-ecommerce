@@ -54,14 +54,14 @@ export declare global {
             content: string;
             createdAt: string;
             stars: number;
-            customer: {
-              data: {
-                id: string;
-                attributes: {
-                  name: string;
-                };
-              };
-            };
+            // customer: {
+            //   data: {
+            //     id: string;
+            //     attributes: {
+            //       name: string;
+            //     };
+            //   };
+            // };
           };
         }[];
       };

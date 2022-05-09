@@ -45,14 +45,14 @@ export const GET_SINGLE_PRODUCT = gql`
                 content
                 createdAt
                 stars
-                customer {
-                  data {
-                    id
-                    attributes {
-                      name
-                    }
-                  }
-                }
+                # customer {
+                #   data {
+                #     id
+                #     attributes {
+                #       name
+                #     }
+                #   }
+                # }
               }
             }
           }

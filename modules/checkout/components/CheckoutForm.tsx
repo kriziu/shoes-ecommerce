@@ -148,7 +148,7 @@ const CheckoutForm = ({ formik }: Props) => {
           </div>
         </div>
       </form>
-      <h3 className="font-bold">Shopping via:</h3>
+      <h3 className="font-bold">Shipping via:</h3>
       <Image
         src={DHL}
         alt="DHL"

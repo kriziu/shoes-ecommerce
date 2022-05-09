@@ -80,7 +80,7 @@ const Cart = () => {
           <div className="mb-2 flex w-full flex-col items-start justify-between sm:mb-0 sm:flex-row sm:items-center">
             <h3 className="text-xl font-semibold">Total: €{totalPrice}</h3>
             <h4>
-              <BiPackage className="mb-[2px] inline" /> calculated at checkout
+              <BiPackage className="mb-[2px] inline" /> Free shipping
             </h4>
           </div>
 

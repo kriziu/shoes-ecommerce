@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { AiOutlineMenu, AiOutlineShoppingCart } from 'react-icons/ai';
+import {
+  AiOutlineMenu,
+  AiOutlineShoppingCart,
+  AiOutlineUser,
+} from 'react-icons/ai';
 import { useSetRecoilState } from 'recoil';
 
 import { defaultEase } from '@/common/animations/easings';
@@ -99,9 +103,16 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
             />
           </div>
           <div>
-            <button className="btn-icon" onClick={toggleCartOpened}>
+            <Link href="/login" passHref>
+              <button className="btn-icon">
+                <AiOutlineUser />
+              </button>
+            </Link>
+
+            <button className="btn-icon ml-3" onClick={toggleCartOpened}>
               <AiOutlineShoppingCart />
             </button>
+
             <button
               className="btn-icon ml-3 inline md:hidden"
               onClick={() => setOpened(true)}
