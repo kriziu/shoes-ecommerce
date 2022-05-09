@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import Mailer from 'nodemailer-react';
 
+import PaymentMail from '../templates/PaymentMail';
 import ReceivedEmail from '../templates/ReceivedMail';
 
 const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
@@ -19,5 +20,5 @@ export const mailer = Mailer(
       from: '"Shoes Ecommerce" <noreply@ecommerce.com>',
     },
   },
-  { ReceivedEmail }
+  { ReceivedEmail, PaymentMail }
 );

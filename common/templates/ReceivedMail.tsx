@@ -118,7 +118,7 @@ const ReceivedEmail = ({
           margin: 0,
         }}
       >
-        Total value: {totalValue}
+        Total value: €{totalValue}
       </h3>
       <p>
         Shop by{' '}

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 import checkDiscount from '@/common/lib/checkDiscount';
+import { mailer } from '@/common/lib/email';
 import stripeLogin from '@/common/lib/stripeLogin';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -118,15 +119,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   ).then((response) => response.json());
 
+  await stripe.paymentIntents.update(paymentIntent.id, {
+    metadata: {
+      orderId: newOrder.data.id,
+    },
+  });
+
   setTimeout(async () => {
     const stripePayment = await stripe.paymentIntents.retrieve(
       paymentIntent.id
     );
 
     if (stripePayment.status !== 'succeeded') {
-      // SEND EMAIL WITH PAYMENT LINK
+      mailer.send(
+        'PaymentMail',
+        {
+          paymentURL: `http://localhost:3000/pay/${paymentIntent.id}`,
+          orderId: newOrder.data.id,
+        },
+        {
+          to: values.email,
+        }
+      );
     }
-  }, 1000 * 5 * 1);
+  }, 1000 * 60 * 5);
 
   return res.status(201).json({
     clientSecret: paymentIntent.client_secret,
