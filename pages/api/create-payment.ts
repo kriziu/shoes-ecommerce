@@ -134,7 +134,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       mailer.send(
         'PaymentMail',
         {
-          paymentURL: `http://localhost:3000/pay/${paymentIntent.id}`,
+          paymentURL: `${process.env.PAGE_URL || 'http://localhost:3000'}/pay/${
+            paymentIntent.id
+          }`,
           orderId: newOrder.data.id,
         },
         {
