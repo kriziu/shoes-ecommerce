@@ -1,75 +1,9 @@
-import { useState } from 'react';
-
 import { useApolloClient } from '@apollo/client';
 import { useFormik } from 'formik';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 import { LOGIN } from '@/common/graphql/mutation/LOGIN';
 
-interface InputComponentProps {
-  label: string;
-  placeholder: string;
-  name: string;
-  handleChange: any;
-  value: string;
-}
-
-const InputComponent = ({
-  label,
-  placeholder,
-  name,
-  handleChange,
-  value,
-}: InputComponentProps) => {
-  return (
-    <label className="flex flex-col">
-      <span className="text-lg font-semibold">{label}</span>
-      <input
-        type="text"
-        className="input"
-        placeholder={placeholder}
-        id={name}
-        name={name}
-        onChange={handleChange}
-        value={value}
-      />
-    </label>
-  );
-};
-
-const InputPasswordComponent = ({
-  label,
-  placeholder,
-  name,
-  handleChange,
-  value,
-}: InputComponentProps) => {
-  const [shown, setShown] = useState(false);
-
-  return (
-    <label className="flex flex-col">
-      <span className="text-lg font-semibold">{label}</span>
-      <div className="relative w-full">
-        <input
-          type={shown ? 'text' : 'password'}
-          className="input w-full"
-          placeholder={placeholder}
-          id={name}
-          name={name}
-          onChange={handleChange}
-          value={value}
-        />
-        <button
-          className="btn-icon absolute right-0 h-full px-2"
-          onClick={() => setShown((prev) => !prev)}
-          type="button"
-        >
-          {shown ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-        </button>
-      </div>
-    </label>
-  );
-};
+import { InputComponent, InputPasswordComponent } from './LoginInputs';
 
 const RegistrationForm = () => {
   const { mutate } = useApolloClient();
@@ -86,12 +20,34 @@ const RegistrationForm = () => {
         })
         .catch(() => console.log('Invalid email or password'));
     },
+    validate: (values) => {
+      const errors: { [key: string]: string } = {};
+
+      if (!values.email) {
+        errors.email = 'Required';
+      }
+
+      if (
+        values.email &&
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+      ) {
+        errors.email = 'Invalid email';
+      }
+
+      if (!values.password) {
+        errors.password = 'Required';
+      }
+
+      return errors;
+    },
+    validateOnBlur: true,
+    validateOnChange: false,
   });
 
   return (
     <div className="flex w-full justify-center">
       <form
-        className="flex w-160 flex-col gap-4"
+        className="flex w-160 flex-col gap-1"
         onSubmit={formik.handleSubmit}
       >
         <InputComponent
@@ -100,6 +56,8 @@ const RegistrationForm = () => {
           name="email"
           handleChange={formik.handleChange}
           value={formik.values.email}
+          errors={formik.errors}
+          handleBlur={formik.handleBlur}
         />
         <InputPasswordComponent
           label="Password"
@@ -107,6 +65,8 @@ const RegistrationForm = () => {
           name="password"
           handleChange={formik.handleChange}
           value={formik.values.password}
+          errors={formik.errors}
+          handleBlur={formik.handleBlur}
         />
 
         <button className="btn mt-1 rounded-md py-2">Login</button>
