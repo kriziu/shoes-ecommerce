@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   AiOutlineMenu,
   AiOutlineShoppingCart,
@@ -24,6 +25,8 @@ import NavMenu from './NavMenu';
 const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
   const [animate, setAnimate] = useState<'from' | 'to'>('from');
   const [opened, setOpened] = useState(false);
+
+  const { pathname } = useRouter();
 
   const toggleCartOpened = useToggleCart();
 
@@ -50,7 +53,11 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
           ease: defaultEase,
         }}
       >
-        <nav className="flex items-center justify-between py-5 px-10 xl:px-24 2xl:px-48">
+        <nav
+          className={`z-50 flex items-center justify-between py-5 px-10 transition-colors xl:px-24 2xl:px-48 ${
+            pathname === '/register' && 'text-white'
+          }`}
+        >
           <h2>
             <Link href="/">
               <a className="text-xl font-bold">Logo</a>
@@ -103,7 +110,7 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
             />
           </div>
           <div>
-            <Link href="/login" passHref>
+            <Link href="/register" passHref>
               <button className="btn-icon">
                 <AiOutlineUser />
               </button>

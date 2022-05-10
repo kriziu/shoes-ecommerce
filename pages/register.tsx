@@ -1,10 +1,12 @@
 import { NextPage } from 'next';
 
-const LoginPage: NextPage = () => {
-  return <div>login</div>;
+import Register from '@/modules/register/components/Register';
+
+const RegisterPage: NextPage = () => {
+  return <Register />;
 };
 
-export default LoginPage;
+export default RegisterPage;
 
 // TODO:
 // 4. Add login/register

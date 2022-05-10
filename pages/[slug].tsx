@@ -6,6 +6,14 @@ import { GET_SINGLE_PRODUCT } from '@/common/graphql/query/GET_SINGLE_PRODUCT';
 import ProductDetails from '@/modules/productDetails/components/ProductDetails';
 
 const ProductPage = ({ product }: { product: Product }) => {
+  if (!product)
+    return (
+      // eslint-disable-next-line prettier/prettier
+      <h1 className="mt-24 px-5 text-center text-xl font-semibold">
+        Product with that slug not found!
+      </h1>
+    );
+
   return <ProductDetails product={product} />;
 };
 
@@ -23,7 +31,7 @@ export async function getStaticProps({ params }: Params) {
 
   return {
     props: {
-      product: products.data[0],
+      product: products.data[0] || null,
     },
   };
 }
