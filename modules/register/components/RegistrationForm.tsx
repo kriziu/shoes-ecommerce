@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useFormik } from 'formik';
 import { AiOutlineClose } from 'react-icons/ai';
-import { BiLoaderAlt } from 'react-icons/bi';
 
+import LoaderButton from '@/common/components/button/components/LoaderButton';
+import InputComponent from '@/common/components/input/components/InputComponent';
+import InputPasswordComponent from '@/common/components/input/components/InputPasswordComponent';
 import { REGISTER } from '@/common/graphql/mutation/REGISTER';
 import { useModal } from '@/common/recoil/modal';
-
-import { InputComponent, InputPasswordComponent } from './RegistrationInputs';
 
 const RegistrationForm = () => {
   const { mutate } = useApolloClient();
@@ -101,6 +101,7 @@ const RegistrationForm = () => {
           handleChange={formik.handleChange}
           errors={formik.errors}
           handleBlur={formik.handleBlur}
+          className="border-none bg-white/25 text-zinc-100 placeholder:text-zinc-400"
         />
         <InputComponent
           label="Email"
@@ -110,6 +111,7 @@ const RegistrationForm = () => {
           handleChange={formik.handleChange}
           errors={formik.errors}
           handleBlur={formik.handleBlur}
+          className="border-none bg-white/25 text-zinc-100 placeholder:text-zinc-400"
         />
         <InputPasswordComponent
           label="Password"
@@ -119,6 +121,7 @@ const RegistrationForm = () => {
           handleChange={formik.handleChange}
           errors={formik.errors}
           handleBlur={formik.handleBlur}
+          className="border-none bg-white/25 text-zinc-100 placeholder:text-zinc-400"
         />
         <InputPasswordComponent
           label="Confirm password"
@@ -128,17 +131,16 @@ const RegistrationForm = () => {
           handleChange={formik.handleChange}
           errors={formik.errors}
           handleBlur={formik.handleBlur}
+          className="border-none bg-white/25 text-zinc-100 placeholder:text-zinc-400"
         />
 
-        <button
-          className={`${
-            loading ? 'btn-icon flex items-center justify-center' : 'btn'
-          } mt-1 h-10 rounded-md bg-white py-0 font-semibold text-black disabled:cursor-not-allowed disabled:bg-white/75`}
+        <LoaderButton
           type="submit"
-          disabled={loading}
+          loading={loading}
+          className="mt-1 h-10 rounded-md bg-white py-0 font-semibold text-black disabled:cursor-not-allowed disabled:bg-white/75"
         >
-          {!loading ? 'Register' : <BiLoaderAlt className="animate-spin" />}
-        </button>
+          Register
+        </LoaderButton>
       </form>
     </div>
   );

@@ -2,19 +2,9 @@ import { useState } from 'react';
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-interface InputComponentProps {
-  label: string;
-  placeholder: string;
-  name: string;
-  handleChange: any;
-  handleBlur: any;
-  value: string;
-  errors: { [key: string]: string };
-}
+import { InputComponentProps } from '../types/input.types';
 
-// TODO: Move this to common, add custom classname to props and use it in checkout, login and register components
-
-export const InputComponent = ({
+const InputPasswordComponent = ({
   label,
   placeholder,
   name,
@@ -22,33 +12,7 @@ export const InputComponent = ({
   handleBlur,
   value,
   errors,
-}: InputComponentProps) => {
-  return (
-    <label className="flex flex-col">
-      <span className="text-lg font-semibold">{label}</span>
-      <input
-        type="text"
-        className="input"
-        placeholder={placeholder}
-        id={name}
-        name={name}
-        onChange={handleChange}
-        value={value}
-        onBlur={handleBlur}
-      />
-      <div className="h-4 text-xs italic text-red-500">{errors[name]}</div>
-    </label>
-  );
-};
-
-export const InputPasswordComponent = ({
-  label,
-  placeholder,
-  name,
-  handleChange,
-  handleBlur,
-  value,
-  errors,
+  className,
 }: InputComponentProps) => {
   const [shown, setShown] = useState(false);
 
@@ -58,7 +22,7 @@ export const InputPasswordComponent = ({
       <div className="relative w-full">
         <input
           type={shown ? 'text' : 'password'}
-          className="input w-full"
+          className={`input w-full ${className || ''}`}
           placeholder={placeholder}
           id={name}
           name={name}
@@ -78,3 +42,5 @@ export const InputPasswordComponent = ({
     </label>
   );
 };
+
+export default InputPasswordComponent;

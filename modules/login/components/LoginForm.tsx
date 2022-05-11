@@ -1,12 +1,17 @@
+import { useState } from 'react';
+
 import { useApolloClient } from '@apollo/client';
 import { useFormik } from 'formik';
 
+import LoaderButton from '@/common/components/button/components/LoaderButton';
+import InputComponent from '@/common/components/input/components/InputComponent';
+import InputPasswordComponent from '@/common/components/input/components/InputPasswordComponent';
 import { LOGIN } from '@/common/graphql/mutation/LOGIN';
-
-import { InputComponent, InputPasswordComponent } from './LoginInputs';
 
 const RegistrationForm = () => {
   const { mutate } = useApolloClient();
+
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -14,11 +19,17 @@ const RegistrationForm = () => {
       password: '',
     },
     onSubmit: (values) => {
+      setLoading(true);
+
       mutate({ mutation: LOGIN, variables: values })
         .then((res) => {
           console.log(res);
+          setLoading(false);
         })
-        .catch(() => console.log('Invalid email or password'));
+        .catch(() => {
+          console.log('Invalid email or password');
+          setLoading(false);
+        });
     },
     validate: (values) => {
       const errors: { [key: string]: string } = {};
@@ -69,7 +80,13 @@ const RegistrationForm = () => {
           handleBlur={formik.handleBlur}
         />
 
-        <button className="btn mt-1 rounded-md py-2">Login</button>
+        <LoaderButton
+          className="mt-1 rounded-md py-2"
+          type="submit"
+          loading={loading}
+        >
+          Login
+        </LoaderButton>
       </form>
     </div>
   );

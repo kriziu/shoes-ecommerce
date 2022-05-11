@@ -1,8 +1,7 @@
 import Image from 'next/image';
 
+import InputComponent from '@/common/components/input/components/InputComponent';
 import DHL from '@/public/img/DHL.webp';
-
-const containerStyle = 'flex flex-col';
 
 interface Props {
   formik: {
@@ -34,119 +33,75 @@ const CheckoutForm = ({ formik }: Props) => {
     <div className="mx-4 lg:mx-0 lg:w-[25rem]">
       <h1 className="text-5xl font-bold xl:text-6xl">Your details</h1>
       <form className=" flex flex-col gap-3">
-        <div className={containerStyle}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-            className="input"
-          />
+        <InputComponent
+          name="name"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.name}
+          errors={formik.errors}
+          label="Name"
+          placeholder="Enter your name..."
+        />
 
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.name}
-          </div>
-        </div>
+        <InputComponent
+          name="address"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.address}
+          errors={formik.errors}
+          label="Address"
+          placeholder="Enter your address..."
+        />
 
-        <div className={containerStyle}>
-          <label htmlFor="address">Address</label>
-          <input
-            type="text"
-            name="address"
-            id="address"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.address}
-            className="input"
-          />
+        <InputComponent
+          name="city"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.city}
+          errors={formik.errors}
+          label="City"
+          placeholder="Enter your city..."
+        />
 
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.address}
-          </div>
-        </div>
+        <InputComponent
+          name="postCode"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.postCode}
+          errors={formik.errors}
+          label="Post code"
+          placeholder="Enter your post code..."
+        />
 
-        <div className={containerStyle}>
-          <label htmlFor="city">City</label>
-          <input
-            type="text"
-            name="city"
-            id="city"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.city}
-            className="input"
-          />
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.city}
-          </div>
-        </div>
+        <InputComponent
+          name="country"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.country}
+          errors={formik.errors}
+          label="Country"
+          placeholder="Enter your country..."
+        />
 
-        <div className={containerStyle}>
-          <label htmlFor="postCode">Post code</label>
-          <input
-            type="text"
-            name="postCode"
-            id="postCode"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.postCode}
-            className="input"
-          />
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.postCode}
-          </div>
-        </div>
+        <InputComponent
+          name="email"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.email}
+          errors={formik.errors}
+          label="Email"
+          placeholder="Enter your email..."
+        />
 
-        <div className={containerStyle}>
-          <label htmlFor="country">Country</label>
-          <input
-            type="text"
-            name="country"
-            id="country"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.country}
-            className="input"
-          />
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.country}
-          </div>
-        </div>
-
-        <div className={containerStyle}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            className="input"
-          />
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.email}
-          </div>
-        </div>
-
-        <div className={containerStyle}>
-          <label htmlFor="phone">Phone</label>
-          <input
-            type="text"
-            name="phone"
-            id="phone"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phone}
-            className="input"
-          />
-          <div className="h-4 text-xs italic text-red-500">
-            {formik.errors.phone}
-          </div>
-        </div>
+        <InputComponent
+          name="phone"
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          value={formik.values.phone}
+          errors={formik.errors}
+          label="Phone"
+          placeholder="Enter your phone..."
+        />
       </form>
       <h3 className="font-bold">Shipping via:</h3>
       <Image
