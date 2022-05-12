@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { useApolloClient } from '@apollo/client';
 import { useFormik } from 'formik';
-import { AiOutlineClose } from 'react-icons/ai';
 
 import LoaderButton from '@/common/components/button/components/LoaderButton';
 import InputComponent from '@/common/components/input/components/InputComponent';
@@ -10,10 +9,13 @@ import InputPasswordComponent from '@/common/components/input/components/InputPa
 import { REGISTER } from '@/common/graphql/mutation/REGISTER';
 import { useModal } from '@/common/recoil/modal';
 
+import EmailSent from '../modals/EmailSent';
+import { ErrorEmail, ErrorName } from '../modals/ErrorModal';
+
 const RegistrationForm = () => {
   const { mutate } = useApolloClient();
 
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
 
   const [loading, setLoading] = useState(false);
 
@@ -30,29 +32,22 @@ const RegistrationForm = () => {
       mutate<{ register: { user: { email: string } } }>({
         mutation: REGISTER,
         variables: values,
-      }).then((res) => {
-        setLoading(false);
+      })
+        .then((res) => {
+          setLoading(false);
 
-        openModal(
-          <div className="relative w-160 rounded-md bg-white py-10 px-5">
-            <button
-              className="btn-icon absolute top-5 right-5"
-              onClick={closeModal}
-            >
-              <AiOutlineClose />
-            </button>
-            <h1 className="text-center text-2xl font-bold">
-              Confirmation email
-            </h1>
-            <p className="mt-5 text-center">
-              Please check your email ({res.data?.register.user.email}) to
-              confirm and login into your account.
-            </p>
-          </div>
-        );
+          openModal(<EmailSent email={res.data?.register.user.email || ''} />);
 
-        formik.resetForm();
-      });
+          formik.resetForm();
+        })
+        .catch((err: Error) => {
+          if (err.message === 'Email is already taken')
+            openModal(<ErrorEmail email={values.email} />);
+          else if (err.message === 'An error occurred during account creation')
+            openModal(<ErrorName name={values.username} />);
+
+          setLoading(false);
+        });
     },
     validate: (values) => {
       const errors: { [key: string]: string } = {};
@@ -65,6 +60,10 @@ const RegistrationForm = () => {
           errors[key] = 'Required';
         }
       });
+
+      if (values.username.length <= 2) {
+        errors.username = 'Name must be at least 3 characters';
+      }
 
       if (
         values.email &&
