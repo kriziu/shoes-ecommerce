@@ -1,7 +1,5 @@
-import type { SortBy } from '../components/ProductList';
-
 export const sortProducts = (
-  sortBy: SortBy,
+  sortBy: string,
   products: SimpleProduct[]
 ): SimpleProduct[] => {
   return products.sort((a, b) => {
