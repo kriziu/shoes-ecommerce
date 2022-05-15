@@ -48,22 +48,7 @@ export declare global {
         };
       };
       reviews: {
-        data: {
-          id: string;
-          attributes: {
-            content: string;
-            createdAt: string;
-            stars: number;
-            // customer: {
-            //   data: {
-            //     id: string;
-            //     attributes: {
-            //       name: string;
-            //     };
-            //   };
-            // };
-          };
-        }[];
+        data: Review[];
       };
       images: {
         data: Image[];
@@ -100,5 +85,27 @@ export declare global {
         products: { data: SimpleProduct[] };
       };
     };
+  }
+
+  interface Review {
+    id: string;
+    attributes: {
+      content: string;
+      stars: number;
+      createdAt: string;
+      user: {
+        data: {
+          attributes: {
+            username: string;
+          };
+        };
+      };
+    };
+  }
+
+  interface User {
+    id: string;
+    username: string;
+    email: string;
   }
 }

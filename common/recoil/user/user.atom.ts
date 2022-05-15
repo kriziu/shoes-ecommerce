@@ -1,11 +1,9 @@
 import { atom } from 'recoil';
 
-export const userAtom = atom<{
-  username: string;
-  email: string;
-}>({
+export const userAtom = atom<User>({
   key: 'user',
   default: {
+    id: '',
     username: '',
     email: '',
   },

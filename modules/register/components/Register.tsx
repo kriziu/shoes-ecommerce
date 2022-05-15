@@ -19,7 +19,7 @@ const Register = () => {
         <h1 className="text-center text-4xl font-semibold leading-tight xl:text-6xl">
           Join us and rock the world.
         </h1>
-        <h4 className="text-center text-xl xl:text-2xl">
+        <h4 className="hidden text-center text-xl sm:block xl:text-2xl">
           Join us to get our newsletters, discount codes and more!
         </h4>
 

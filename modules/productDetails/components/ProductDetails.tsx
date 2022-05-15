@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { useApolloClient } from '@apollo/client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AiFillStar } from 'react-icons/ai';
 
+import { GET_REVIEWS } from '@/common/graphql/query/GET_REVIEWS';
 import { useAddToCart } from '@/common/recoil/cart/cart.hooks';
 import { useModal } from '@/common/recoil/modal';
 
 import ProductDetailsModal from '../modals/ProductDetailsModal';
+import Reviews from '../modals/Reviews';
 import SizeGuide from '../modals/SizeGuide';
 import ProductGallery from './ProductGallery';
 import ProductVariant from './ProductVariant';
@@ -19,18 +22,42 @@ const defaultSizes = [42, 42.5, 43, 43.5, 44];
 const ProductDetails = ({ product }: { product: Product }) => {
   const { slug } = useRouter().query;
 
+  const { query } = useApolloClient();
+
   const [selectedSize, setSelectedSize] = useState(product.attributes.sizes[0]);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const addToCart = useAddToCart();
 
   const { openModal } = useModal();
 
-  if (!slug) return null;
-
   const {
     id,
     attributes: { name, description, images, price, productVariants, sizes },
   } = product;
+
+  useEffect(() => {
+    query<{ reviews: { data: Review[] } }>({
+      query: GET_REVIEWS,
+      variables: {
+        productId: id,
+      },
+      fetchPolicy: 'no-cache',
+    }).then((res) => {
+      setReviews(res.data.reviews.data);
+    });
+  }, [id, query]);
+
+  const averageRating = useMemo(() => {
+    if (reviews.length === 0) return 0;
+
+    return (
+      reviews.reduce((acc, { attributes: { stars } }) => acc + stars, 0) /
+      reviews.length
+    );
+  }, [reviews]);
+
+  if (!slug) return null;
 
   return (
     <div className="mt-24 flex flex-col items-center justify-center px-0 sm:px-5 md:px-10 lg:px-36 xl:flex-row xl:items-start xl:gap-12 xl:px-0 2xl:gap-24">
@@ -48,9 +75,20 @@ const ProductDetails = ({ product }: { product: Product }) => {
           </h2>
 
           <div className="flex items-center gap-1 text-lg">
-            <p className="mb-[-2px]">4.7</p>
+            <p className="mb-[-2px]">{averageRating}</p>
             <AiFillStar />
-            <button className="cursor-pointer text-base text-zinc-500 hover:underline">
+            <button
+              className="cursor-pointer text-base text-zinc-500 hover:underline"
+              onClick={() =>
+                openModal(
+                  <Reviews
+                    reviews={reviews}
+                    productId={id}
+                    setReviews={setReviews}
+                  />
+                )
+              }
+            >
               (Show rates)
             </button>
           </div>

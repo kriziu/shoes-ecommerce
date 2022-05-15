@@ -8,10 +8,10 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUser,
 } from 'react-icons/ai';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { defaultEase } from '@/common/animations/easings';
-import { useToggleCart } from '@/common/recoil/cart';
+import cartAtom, { useToggleCart } from '@/common/recoil/cart';
 import filterAtom, { defaultFilter } from '@/common/recoil/filter';
 import kidImage from '@/public/img/kid.jpg';
 import menImage from '@/public/img/men.jpg';
@@ -23,6 +23,10 @@ import NavItem from './NavItem';
 import NavMenu from './NavMenu';
 
 const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
+  const {
+    attributes: { products },
+  } = useRecoilValue(cartAtom);
+
   const [animate, setAnimate] = useState<'from' | 'to'>('from');
   const [opened, setOpened] = useState(false);
 
@@ -116,7 +120,16 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
               </button>
             </Link>
 
-            <button className="btn-icon ml-3" onClick={toggleCartOpened}>
+            <button
+              className="btn-icon relative ml-3"
+              onClick={toggleCartOpened}
+            >
+              {products.length > 0 && (
+                <span className="absolute -top-1 h-5 w-5 rounded-full bg-red-500 text-sm">
+                  {products.length}
+                </span>
+              )}
+
               <AiOutlineShoppingCart />
             </button>
 

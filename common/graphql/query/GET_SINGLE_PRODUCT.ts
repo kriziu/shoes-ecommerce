@@ -38,24 +38,6 @@ export const GET_SINGLE_PRODUCT = gql`
               }
             }
           }
-          reviews {
-            data {
-              id
-              attributes {
-                content
-                createdAt
-                stars
-                # customer {
-                #   data {
-                #     id
-                #     attributes {
-                #       name
-                #     }
-                #   }
-                # }
-              }
-            }
-          }
           images {
             data {
               id
