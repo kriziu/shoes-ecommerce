@@ -20,7 +20,7 @@ const Product = ({
       }}
     >
       <img
-        src={process.env.NEXT_PUBLIC_STRAPI_URL + images.data[0].attributes.url}
+        src={images.data[0].attributes.url}
         alt="sample"
         style={{ objectFit: 'cover', height: '100%', width: '100%' }}
       />
@@ -116,6 +116,7 @@ const ReceivedEmail = ({
           fontSize: 20,
           fontWeight: 600,
           margin: 0,
+          marginTop: 10,
         }}
       >
         Total value: €{totalValue}

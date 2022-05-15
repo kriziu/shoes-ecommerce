@@ -96,17 +96,25 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <h3 className="mt-10 text-3xl 2xl:text-4xl">€{price}</h3>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            {productVariants.data.attributes.products.data.map(
-              (relatedProduct) => {
-                return (
-                  <ProductVariant
-                    selected={relatedProduct.id === id}
-                    key={relatedProduct.id}
-                    image={relatedProduct.attributes.images.data[0]}
-                    slug={relatedProduct.attributes.slug}
-                  />
-                );
-              }
+            {productVariants.data &&
+              productVariants.data.attributes.products.data.map(
+                (relatedProduct) => {
+                  return (
+                    <ProductVariant
+                      selected={relatedProduct.id === id}
+                      key={relatedProduct.id}
+                      image={relatedProduct.attributes.images.data[0]}
+                      slug={relatedProduct.attributes.slug}
+                    />
+                  );
+                }
+              )}
+            {!productVariants.data && (
+              <ProductVariant
+                selected
+                image={images.data[0]}
+                slug={slug.toString()}
+              />
             )}
           </div>
 

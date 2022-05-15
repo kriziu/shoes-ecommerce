@@ -36,7 +36,7 @@ const ProductVariant = ({ selected = false, image, slug }: Props) => {
           className="h-full w-full"
         >
           <Image
-            src={process.env.NEXT_PUBLIC_STRAPI_URL + image.attributes.url}
+            src={image.attributes.url}
             alt="Product variant"
             layout="raw"
             width={image.attributes.width / 5}

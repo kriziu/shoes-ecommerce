@@ -9,8 +9,7 @@ const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
 export const mailer = Mailer(
   {
     transport: nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
+      service: 'gmail',
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASSWORD,

@@ -6,7 +6,7 @@ export const useLogin = () => {
   const setUser = useSetRecoilState(userAtom);
 
   const handleLogin = (
-    user: { username: string; email: string },
+    user: { username: string; email: string; id: string },
     jwt: string
   ) => {
     localStorage.setItem('user', JSON.stringify(user));
@@ -23,7 +23,7 @@ export const useLogout = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('jwt');
-    setUser({ username: '', email: '' });
+    setUser({ username: '', email: '', id: '' });
   };
 
   return { handleLogout };

@@ -7,8 +7,8 @@ const stripeLogin = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        identifier: process.env.STRIPE_IDENTIFIER,
-        password: process.env.STRIPE_PASSWORD,
+        identifier: process.env.STRAPI_IDENTIFIER,
+        password: process.env.STRAPI_PASSWORD,
       }),
     }
   ).then((response) => response.json());

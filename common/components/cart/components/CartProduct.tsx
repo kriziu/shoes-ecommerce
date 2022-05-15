@@ -62,7 +62,7 @@ const CartProduct = ({
               animate={{ scale: hover ? 1.07 : 1 }}
             >
               <Image
-                src={process.env.NEXT_PUBLIC_STRAPI_URL + image.attributes.url}
+                src={image.attributes.url}
                 width={image.attributes.width / 5}
                 height={image.attributes.height / 5}
                 alt=""

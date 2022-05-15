@@ -30,7 +30,10 @@ const RegistrationForm = () => {
       setLoading(true);
 
       mutate<{
-        login: { user: { username: string; email: string }; jwt: string };
+        login: {
+          user: { username: string; email: string; id: string };
+          jwt: string;
+        };
       }>({ mutation: LOGIN, variables: values })
         .then((res) => {
           if (res.data?.login)

@@ -50,7 +50,7 @@ const ProductComponent = ({
               layout="raw"
               width={image.attributes.width / 3}
               height={image.attributes.height / 3}
-              src={process.env.NEXT_PUBLIC_STRAPI_URL + image.attributes.url}
+              src={image.attributes.url}
               alt={name}
               className="h-full w-full object-cover"
             />

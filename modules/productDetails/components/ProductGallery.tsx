@@ -50,10 +50,7 @@ const ProductGallery = ({ images }: { images: Image[] }) => {
         className="h-full w-full"
       >
         <Image
-          src={
-            process.env.NEXT_PUBLIC_STRAPI_URL +
-            images[imageIndex].attributes.url
-          }
+          src={images[imageIndex].attributes.url}
           alt="Detail photo"
           width={images[imageIndex].attributes.width || 860}
           height={images[imageIndex].attributes.height || 1080}
