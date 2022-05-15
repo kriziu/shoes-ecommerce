@@ -23,7 +23,7 @@ const Filter = () => {
   return (
     <>
       <button
-        className="absolute top-20 left-5 cursor-pointer p-1 text-xl font-bold transition-transform hover:scale-105 active:scale-100 sm:left-10 xl:hidden"
+        className="btn absolute top-16 left-5 cursor-pointer p-2 px-4 transition-transform sm:left-10 xl:hidden"
         onClick={handleOpenModal}
       >
         Filter

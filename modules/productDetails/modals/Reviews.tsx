@@ -87,7 +87,13 @@ const CreateReview = ({
       })
       .catch((err) => {
         openModal(
-          <div className="rounded-md bg-white p-10 text-xl font-semibold">
+          <div className="relative rounded-md bg-white p-10 text-xl font-semibold">
+            <button
+              className="btn-icon absolute right-3 top-3"
+              onClick={() => closeModal()}
+            >
+              <AiOutlineClose />
+            </button>
             {err.message}
           </div>
         );

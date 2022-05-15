@@ -1,6 +1,9 @@
 import { atom } from 'recoil';
 
+export type SortBy = 'default' | 'low' | 'high' | 'A' | 'Z';
+
 export const defaultFilter = {
+  sortBy: 'default' as SortBy,
   gender: {
     men: false,
     women: false,
