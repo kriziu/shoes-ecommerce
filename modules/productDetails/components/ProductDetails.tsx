@@ -46,6 +46,10 @@ const ProductDetails = ({ product, blurDataUrls }: ProductDetailsPageProps) => {
   } = product;
 
   useEffect(() => {
+    setSelectedSize(product.attributes.sizes[0] || defaultSizes[0]);
+  }, [product.attributes.sizes]);
+
+  useEffect(() => {
     query<{ reviews: { data: Review[] } }>({
       query: GET_REVIEWS,
       variables: {
