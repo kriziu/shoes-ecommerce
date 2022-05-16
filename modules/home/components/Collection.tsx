@@ -6,9 +6,16 @@ interface Props {
   title: string;
   subtitle: string;
   image: StaticImageData;
+  handleClick: () => void;
 }
 
-const Collection = ({ right = false, title, subtitle, image }: Props) => {
+const Collection = ({
+  right = false,
+  title,
+  subtitle,
+  image,
+  handleClick,
+}: Props) => {
   return (
     <div
       className={`${
@@ -34,7 +41,9 @@ const Collection = ({ right = false, title, subtitle, image }: Props) => {
         <h2 className="-mb-2 text-3xl font-bold sm:text-5xl">{title}</h2>
         <h3 className=" w-2/3 text-sm">{subtitle}</h3>
         <Link href="/shoes">
-          <a className="btn mt-2 w-max">Checkout</a>
+          <a className="btn mt-2 w-max" onClick={handleClick}>
+            Checkout
+          </a>
         </Link>
       </div>
     </div>
