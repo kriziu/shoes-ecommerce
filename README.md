@@ -6,7 +6,7 @@ Repository with CMS: https://github.com/kriziu/shoes-ecommerce-cms
 ## Features
 
 - Image optimization by NextJS Image and Cloudinary
-- Blazing fast page loading, Very good SEO
+- Blazing fast page loading, very good SEO
 - Products, discounts, images, etc. - all managed by Strapi CMS
 - Reviews
 - Payment with Stripe
