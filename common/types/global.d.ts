@@ -1,7 +1,7 @@
 export declare global {
   interface Image {
     id: string;
-    attributes: { width: number; height: number; url: string };
+    attributes: { width: number; height: number; hash: string };
   }
 
   interface SimpleProduct {

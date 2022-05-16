@@ -28,7 +28,7 @@ export const GET_SINGLE_PRODUCT = gql`
                           attributes {
                             width
                             height
-                            url
+                            hash
                           }
                         }
                       }
@@ -44,7 +44,7 @@ export const GET_SINGLE_PRODUCT = gql`
               attributes {
                 width
                 height
-                url
+                hash
               }
             }
           }

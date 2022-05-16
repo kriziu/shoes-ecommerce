@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { defaultEase } from '@/common/animations/easings';
+import { cloudinaryLoader } from '@/common/lib/cloudinaryLoader';
 
 interface Props {
   selected?: boolean;
@@ -36,7 +37,9 @@ const ProductVariant = ({ selected = false, image, slug }: Props) => {
           className="h-full w-full"
         >
           <Image
-            src={image.attributes.url}
+            loader={cloudinaryLoader}
+            quality={50}
+            src={image.attributes.hash}
             alt="Product variant"
             layout="raw"
             width={image.attributes.width / 5}

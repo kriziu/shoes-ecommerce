@@ -7,6 +7,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { v4 as uuidv4 } from 'uuid';
 
 import { defaultEase } from '@/common/animations/easings';
+import { cloudinaryLoader } from '@/common/lib/cloudinaryLoader';
 import { useToggleCart } from '@/common/recoil/cart';
 import {
   useRemoveFromCart,
@@ -62,9 +63,11 @@ const CartProduct = ({
               animate={{ scale: hover ? 1.07 : 1 }}
             >
               <Image
-                src={image.attributes.url}
+                loader={cloudinaryLoader}
+                src={image.attributes.hash}
                 width={image.attributes.width / 5}
                 height={image.attributes.height / 5}
+                quality={50}
                 alt=""
                 layout="raw"
                 className=" object-cover"

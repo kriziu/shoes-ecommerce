@@ -41,6 +41,7 @@ const Home = () => {
           alt=""
           className="h-full w-full object-cover object-center"
           priority
+          placeholder="blur"
         />
         <motion.div
           variants={collectionListAnimation}

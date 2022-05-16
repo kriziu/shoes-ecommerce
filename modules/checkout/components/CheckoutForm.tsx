@@ -111,6 +111,7 @@ const CheckoutForm = ({ formik }: Props) => {
         layout="raw"
         width={400}
         height={100}
+        placeholder="blur"
       />
     </div>
   );

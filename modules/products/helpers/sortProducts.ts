@@ -20,3 +20,7 @@ export const sortProducts = (
     }
   });
 };
+
+// TODO:
+// 1. Add sorting by stars
+// 2. Add image placeholders

@@ -47,7 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                               attributes {
                                 width
                                 height
-                                url
+                                hash
                               }
                             }
                           }

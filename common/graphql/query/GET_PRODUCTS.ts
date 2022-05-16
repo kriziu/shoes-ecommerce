@@ -18,7 +18,7 @@ export const GET_PRODUCTS = gql`
               attributes {
                 width
                 height
-                url
+                hash
               }
             }
           }

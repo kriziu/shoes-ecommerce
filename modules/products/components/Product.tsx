@@ -6,6 +6,11 @@ import Link from 'next/link';
 import { useTimeoutFn } from 'react-use';
 
 import { defaultEase } from '@/common/animations/easings';
+import { cloudinaryLoader } from '@/common/lib/cloudinaryLoader';
+
+interface Props extends SimpleProduct {
+  blurDataUrl: string;
+}
 
 const ProductComponent = ({
   id,
@@ -19,7 +24,8 @@ const ProductComponent = ({
     },
     slug,
   },
-}: SimpleProduct) => {
+  blurDataUrl,
+}: Props) => {
   const [active, setActive] = useState(false);
   const [overflow, setOverflow] = useState(false);
 
@@ -47,12 +53,16 @@ const ProductComponent = ({
             animate={{ scale: active ? 1.07 : 1 }}
           >
             <Image
+              loader={cloudinaryLoader}
               layout="raw"
               width={image.attributes.width / 3}
               height={image.attributes.height / 3}
-              src={image.attributes.url}
+              src={image.attributes.hash}
               alt={name}
+              quality={75}
               className="h-full w-full object-cover"
+              placeholder="blur"
+              blurDataURL={blurDataUrl}
             />
           </motion.div>
         </a>

@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { wrap } from 'popmotion';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+
+import { cloudinaryLoader } from '@/common/lib/cloudinaryLoader';
 
 import { galleryVariants } from '../animations/ProductGallery.animations';
 
@@ -12,25 +13,34 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const ProductGallery = ({ images }: { images: Image[] }) => {
+const ProductGallery = ({
+  images,
+  blurDataUrls,
+}: {
+  images: Image[];
+  blurDataUrls: { [key: string]: string };
+}) => {
   const [initial, setInitial] = useState(true);
 
-  const [[page, direction], setPage] = useState([0, 0]);
+  const [[imageIndex, direction], setImage] = useState([0, 0]);
 
   useEffect(() => {
     setInitial(false);
   }, []);
 
-  const imageIndex = wrap(0, images.length, page);
-
   const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
+    let newIndex = imageIndex + newDirection;
+
+    if (newIndex < 0) newIndex = images.length - 1;
+    if (newIndex > images.length - 1) newIndex = 0;
+
+    setImage([newIndex, newDirection]);
   };
 
   return (
     <div className="relative h-full">
       <motion.div
-        key={page}
+        key={imageIndex}
         custom={direction}
         variants={galleryVariants}
         initial={!initial && 'enter'}
@@ -38,7 +48,7 @@ const ProductGallery = ({ images }: { images: Image[] }) => {
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={1}
-        onDragEnd={(e, { offset, velocity }) => {
+        onDragEnd={(_, { offset, velocity }) => {
           const swipe = swipePower(offset.x, velocity.x);
 
           if (swipe < -swipeConfidenceThreshold) {
@@ -50,13 +60,16 @@ const ProductGallery = ({ images }: { images: Image[] }) => {
         className="h-full w-full"
       >
         <Image
-          src={images[imageIndex].attributes.url}
+          loader={cloudinaryLoader}
+          src={images[imageIndex].attributes.hash}
           alt="Detail photo"
-          width={images[imageIndex].attributes.width || 860}
-          height={images[imageIndex].attributes.height || 1080}
+          width={images[imageIndex].attributes.width}
+          height={images[imageIndex].attributes.height}
           className="pointer-events-none object-cover"
           layout="raw"
           priority
+          placeholder="blur"
+          blurDataURL={blurDataUrls[images[imageIndex].attributes.hash]}
         />
       </motion.div>
       <button

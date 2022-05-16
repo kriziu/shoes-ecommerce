@@ -9,6 +9,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { GET_REVIEWS } from '@/common/graphql/query/GET_REVIEWS';
 import { useAddToCart } from '@/common/recoil/cart/cart.hooks';
 import { useModal } from '@/common/recoil/modal';
+import type { ProductDetailsPageProps } from '@/pages/[slug]';
 
 import ProductDetailsModal from '../modals/ProductDetailsModal';
 import Reviews from '../modals/Reviews';
@@ -19,7 +20,7 @@ import Size from './Size';
 
 const defaultSizes = [42, 42.5, 43, 43.5, 44];
 
-const ProductDetails = ({ product }: { product: Product }) => {
+const ProductDetails = ({ product, blurDataUrls }: ProductDetailsPageProps) => {
   const { slug } = useRouter().query;
 
   const { query } = useApolloClient();
@@ -65,7 +66,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
         layoutId={id}
         className="relative flex h-full justify-end overflow-hidden xl:w-[50%] 2xl:min-w-[50%]"
       >
-        <ProductGallery images={images.data} />
+        <ProductGallery images={images.data} blurDataUrls={blurDataUrls} />
       </motion.div>
 
       <div className="mt-5 flex flex-1 justify-between px-2">
