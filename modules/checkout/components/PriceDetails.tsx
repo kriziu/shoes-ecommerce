@@ -21,15 +21,21 @@ const PriceDetails = ({
 
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
+  const [invalid, setInvalid] = useState(false);
 
   const handleDiscountCodeEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     axios
       .post<DiscountCode>('/api/check-discount', { discountCode: code })
-      .then((res) => setAppliedCode(res.data))
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
+      .then((res) => {
+        setAppliedCode(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setInvalid(true);
+        setLoading(false);
+      });
   };
 
   const handleDiscountCodeRemove = () => setAppliedCode(undefined);
@@ -83,10 +89,13 @@ const PriceDetails = ({
             <label className="font-semibold">Enter discount code</label>
             <div className="flex gap-3">
               <input
-                className="input w-36"
+                className={`input w-36 ${invalid && 'border-red-500'}`}
                 placeholder="Code..."
                 value={code}
-                onChange={(e) => setCode(e.target.value)}
+                onChange={(e) => {
+                  setCode(e.target.value);
+                  setInvalid(false);
+                }}
               />
               <button className="btn w-min p-1 px-2" type="submit">
                 Check

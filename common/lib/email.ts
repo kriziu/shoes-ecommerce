@@ -16,7 +16,7 @@ export const mailer = Mailer(
       },
     }),
     defaults: {
-      from: '"Shoes Ecommerce" <noreply@ecommerce.com>',
+      from: { name: 'Shoes E-Commerce', address: '<noreply@ecommerce.com>' },
     },
   },
   { ReceivedEmail, PaymentMail }
