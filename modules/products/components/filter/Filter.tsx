@@ -48,7 +48,7 @@ const Filter = () => {
       </button>
       <motion.div
         className="hidden w-48 xl:mr-5 xl:block 2xl:mr-0"
-        animate={{ marginTop: y }}
+        animate={{ y }}
         transition={{ bounce: 0 }}
       >
         <h2 className="text-2xl font-semibold">Filter</h2>
