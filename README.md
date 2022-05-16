@@ -1,21 +1,66 @@
-# Next.js + Tailwind CSS Example
+# Shoes E-Commerce
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+Shop made in Next.JS and Strapi containing products from https://nike.com
 
-## Deploy your own
+Repository with CMS: https://github.com/kriziu/shoes-ecommerce-cms
+## Features
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+- Image optimization by NextJS Image and Cloudinary
+- Blazing fast page loading, Very good SEO
+- Products, discounts, images, etc. - all managed by Strapi CMS
+- Reviews
+- Payment with Stripe
+- Sending emails using nodemailer
+- Good looking animations
+## Made using
+- Next.JS
+- Recoil
+- GraphQL
+- Strapi
+- TailwindCSS
+- Framer Motion
+- Stripe
+- Cloudinary
+## Demo
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+LIVE DEMO https://shoes-ecommerce.herokuapp.com
 
-## How to use
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+## Environment Variables
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+To run this project, you will need to add the following environment variables to your .env file
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+`NEXT_PUBLIC_STRIPE_API_KEY`
+
+`STRIPE_SECRET_KEY`
+
+`STRAPI_IDENTIFIER` - strapi server user
+
+`STRAPI_PASSWORD`
+
+`NEXT_PUBLIC_STRAPI_URL`
+
+`EMAIL_USER` - gmail user
+
+`EMAIL_PASSWORD`
+
+`PAGE_URL`
+
+`NEXT_PUBLIC_CLOUDINARY_URL`
+## Installation
+
+First, clone CMS and do steps in this repository: https://github.com/kriziu/shoes-ecommerce-cms
+
+Make .env.local file and paste variables from upper section, then install as normal Next.JS application.
+## Screenshots
+
+![google pay](https://i.imgur.com/b4dGYga.jpeg)
+![front page](https://i.imgur.com/KMUSuim.png)
+![front page bottom](https://i.imgur.com/IlbI8SD.png)
+![shoes page](https://i.imgur.com/8yf4kaL.png)
+#### Hover over link:
+![hover over link](https://i.imgur.com/N1v8KcN.png)
+![product details](https://i.imgur.com/dBf2C08.png)
+![register page](https://i.imgur.com/TeqjTx3.png)
+![checkout page](https://i.imgur.com/IhJqtfQ.png)
+![email](https://i.imgur.com/ogWBc7K.png)
