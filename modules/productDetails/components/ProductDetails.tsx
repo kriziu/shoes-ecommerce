@@ -34,7 +34,15 @@ const ProductDetails = ({ product, blurDataUrls }: ProductDetailsPageProps) => {
 
   const {
     id,
-    attributes: { name, description, images, price, productVariants, sizes },
+    attributes: {
+      name,
+      description,
+      images,
+      price,
+      productVariants,
+      sizes,
+      category,
+    },
   } = product;
 
   useEffect(() => {
@@ -74,6 +82,10 @@ const ProductDetails = ({ product, blurDataUrls }: ProductDetailsPageProps) => {
           <h2 className="mb-2 text-4xl font-semibold leading-none 2xl:text-5xl">
             {name}
           </h2>
+
+          <h3 className="mb-2 text-lg font-semibold leading-none text-zinc-600 2xl:text-2xl">
+            {category[0].toUpperCase() + category.slice(1)}
+          </h3>
 
           <div className="flex items-center gap-1 text-lg">
             <p className="mb-[-2px]">{averageRating}</p>

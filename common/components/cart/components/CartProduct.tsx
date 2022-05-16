@@ -24,6 +24,7 @@ const CartProduct = ({
     images: {
       data: [image],
     },
+    category,
   },
   size,
   quantity,
@@ -85,6 +86,9 @@ const CartProduct = ({
                 {name}
               </a>
             </Link>
+            <h5 className="-mt-1 text-sm font-semibold text-zinc-600">
+              {category[0].toUpperCase() + category.slice(1)}
+            </h5>
             <h5 className="mt-1 text-sm">Size: {size}</h5>
           </div>
           <div className="flex items-center">
