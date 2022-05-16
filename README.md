@@ -46,7 +46,7 @@ To run this project, you will need to add the following environment variables to
 
 `PAGE_URL`
 
-`NEXT_PUBLIC_CLOUDINARY_URL`
+`NEXT_PUBLIC_CLOUDINARY_URL` (https://res.cloudinary.com/<accountname>/image/upload)
 ## Installation
 
 First, clone CMS and do steps in this repository: https://github.com/kriziu/shoes-ecommerce-cms
