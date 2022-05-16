@@ -20,7 +20,7 @@ const Product = ({
       }}
     >
       <img
-        src={`https://res.cloudinary.com/kriziuu/image/upload/w_300/q_75,f_webp/${images.data[0].attributes.hash}`}
+        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/w_300/q_75,f_webp/${images.data[0].attributes.hash}`}
         alt="sample"
         style={{ objectFit: 'cover', height: '100%', width: '100%' }}
       />
