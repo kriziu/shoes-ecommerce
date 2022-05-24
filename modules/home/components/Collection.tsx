@@ -42,7 +42,7 @@ const Collection = ({
         <h3 className=" w-2/3 text-sm">{subtitle}</h3>
         <Link href="/shoes">
           <a className="btn mt-2 w-max" onClick={handleClick}>
-            Checkout
+            Explore
           </a>
         </Link>
       </div>
