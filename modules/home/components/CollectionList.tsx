@@ -17,7 +17,7 @@ const CollectionList = () => {
         <div className="w-full lg:w-[40rem] lg:translate-x-20 xl:w-[60rem]">
           <Collection
             title="Men"
-            subtitle="Checkout our men collection for summer"
+            subtitle="See our men collection for summer"
             image={menImage}
             handleClick={() =>
               setFilter({
