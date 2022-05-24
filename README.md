@@ -6,7 +6,7 @@ Repository with CMS: https://github.com/kriziu/shoes-ecommerce-cms
 ## Features
 
 - Image optimization by NextJS Image and Cloudinary
-- Blazing fast page loading, Very good SEO
+- Blazing fast page loading, very good SEO
 - Products, discounts, images, etc. - all managed by Strapi CMS
 - Reviews
 - Payment with Stripe
@@ -46,7 +46,7 @@ To run this project, you will need to add the following environment variables to
 
 `PAGE_URL`
 
-`NEXT_PUBLIC_CLOUDINARY_URL`
+`NEXT_PUBLIC_CLOUDINARY_URL` (https://res.cloudinary.com/accountname/image/upload)
 ## Installation
 
 First, clone CMS and do steps in this repository: https://github.com/kriziu/shoes-ecommerce-cms
@@ -54,6 +54,8 @@ First, clone CMS and do steps in this repository: https://github.com/kriziu/shoe
 Make .env.local file and paste variables from upper section, then install as normal Next.JS application.
 ## Screenshots
 
+![front_page_animate](https://media3.giphy.com/media/AFbp4tFByUFeBjHoyu/giphy.gif?cid=790b7611d848b57fe68f48a28bc509749f68bca22d757406&rid=giphy.gif&ct=g)
+![login_page_animate](https://media3.giphy.com/media/0y21oYZwuksjS2qjkz/giphy.gif)
 ![front page](https://i.imgur.com/KMUSuim.png)
 ![front page bottom](https://i.imgur.com/IlbI8SD.png)
 ![shoes page](https://i.imgur.com/8yf4kaL.png)
