@@ -5,7 +5,7 @@ import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 
-import Spinner from '@/common/components/Loader/components/Spinner';
+import Spinner from '@/common/components/spinner/components/Spinner';
 import cartAtom from '@/common/recoil/cart';
 import { useClearCart } from '@/common/recoil/cart/cart.hooks';
 

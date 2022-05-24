@@ -1,7 +1,7 @@
 import { Html, Main, NextScript, Head } from 'next/document';
 
 const document = () => (
-  <Html>
+  <Html lang="en">
     <Head>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link

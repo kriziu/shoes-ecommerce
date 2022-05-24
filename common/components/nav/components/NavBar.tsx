@@ -115,7 +115,7 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
           </div>
           <div>
             <Link href="/register" passHref>
-              <button className="btn-icon">
+              <button className="btn-icon" aria-label="Account">
                 <AiOutlineUser />
               </button>
             </Link>
@@ -123,6 +123,7 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
             <button
               className="btn-icon relative ml-3"
               onClick={toggleCartOpened}
+              aria-label="Cart"
             >
               {products.length > 0 && (
                 <span className="absolute -top-1 h-5 w-5 rounded-full bg-red-500 text-sm">
@@ -136,6 +137,7 @@ const NavBar = ({ onHomePage = false }: { onHomePage?: boolean }) => {
             <button
               className="btn-icon ml-3 inline md:hidden"
               onClick={() => setOpened(true)}
+              aria-label="Menu"
             >
               <AiOutlineMenu />
             </button>

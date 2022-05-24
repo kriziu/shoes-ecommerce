@@ -6,7 +6,7 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import Spinner from '@/common/components/Loader/components/Spinner';
+import Spinner from '@/common/components/spinner/components/Spinner';
 import StripeCheckout from '@/modules/checkout/components/StripeCheckout';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY || '');
