@@ -54,6 +54,7 @@ First, clone CMS and do steps in this repository: https://github.com/kriziu/shoe
 Make .env.local file and paste variables from upper section, then install as normal Next.JS application.
 ## Screenshots
 
+![front_page_animate](https://media3.giphy.com/media/AFbp4tFByUFeBjHoyu/giphy.gif?cid=790b7611d848b57fe68f48a28bc509749f68bca22d757406&rid=giphy.gif&ct=g)
 ![front page](https://i.imgur.com/KMUSuim.png)
 ![front page bottom](https://i.imgur.com/IlbI8SD.png)
 ![shoes page](https://i.imgur.com/8yf4kaL.png)
